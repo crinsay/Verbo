@@ -7,21 +7,21 @@ import androidx.room.PrimaryKey
 import com.example.verbo.models.DatabaseConstants
 
 @Entity(
-    tableName = DatabaseConstants.TablesNames.FLASHCARD, foreignKeys = [
+    tableName = DatabaseConstants.TableNames.FLASHCARD, foreignKeys = [
     ForeignKey(
-        entity = Set::class,
-        parentColumns = ["setId"],
-        childColumns = ["setId"],
+        entity = Deck::class,
+        parentColumns = ["deckId"],
+        childColumns = ["deckId"],
         onDelete = ForeignKey.CASCADE
     )
 ],
     indices = [Index(value = ["flashcardId"], unique = true),
-              Index(value = ["setId"], unique = false)]
+               Index(value = ["deckId"], unique = false)]
 )
 data class Flashcard(
     @PrimaryKey(autoGenerate = true)
     val flashcardId: Long,
     val wordDefinition: String,
     val wordTranslation: String,
-    val setId: Long
+    val deckId: Long
 )

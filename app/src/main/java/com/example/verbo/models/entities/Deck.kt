@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 import com.example.verbo.models.DatabaseConstants
 
 @Entity(
-    tableName = DatabaseConstants.TablesNames.SET, foreignKeys = [
+    tableName = DatabaseConstants.TableNames.DECK, foreignKeys = [
     ForeignKey(
         entity = Language::class,
         parentColumns = ["languageId"],
@@ -15,12 +15,12 @@ import com.example.verbo.models.DatabaseConstants
         onDelete = ForeignKey.CASCADE
     )
 ],
-    indices = [Index(value = ["setId"], unique = true),
-        Index(value = ["languageId"], unique = false)]
+    indices = [Index(value = ["deckId"], unique = true),
+               Index(value = ["languageId"], unique = false)]
 )
-data class Set(
+data class Deck(
     @PrimaryKey(autoGenerate = true)
-    val setId: Long,
+    val deckId: Long,
     val name: String,
     val languageId: Long
 )
