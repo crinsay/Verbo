@@ -1,5 +1,6 @@
 package com.example.verbo.hiltmodules
 
+import com.example.verbo.models.daos.LanguageDao
 import com.example.verbo.models.repositories.deckrepository.DeckRepository
 import com.example.verbo.models.repositories.deckrepository.IDeckRepository
 import com.example.verbo.models.repositories.flashcardrepository.FlashcardRepository
@@ -8,6 +9,7 @@ import com.example.verbo.models.repositories.languagerepository.ILanguageReposit
 import com.example.verbo.models.repositories.languagerepository.LanguageRepository
 import dagger.Binds
 import dagger.Module
+import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
