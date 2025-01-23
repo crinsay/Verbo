@@ -23,5 +23,5 @@ data class Flashcard(
     val flashcardId: Long,
     val wordDefinition: String,
     val wordTranslation: String,
-    val deckId: Long
+    var deckId: Long
 )
