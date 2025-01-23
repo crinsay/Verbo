@@ -22,5 +22,5 @@ data class Deck(
     @PrimaryKey(autoGenerate = true)
     val deckId: Long,
     val name: String,
-    val languageId: Long
+    var languageId: Long
 )
