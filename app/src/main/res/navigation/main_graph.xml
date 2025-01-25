@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_graph"
+    app:startDestination="@id/menuFragment">
+
+    <fragment
+        android:id="@+id/menuFragment"
+        android:name="com.example.verbo.Menu.MenuFragment"
+        android:label="fragment_menu"
+        tools:layout="@layout/fragment_menu" >
+        <action
+            android:id="@+id/action_menuFragment_to_setsFragment"
+            app:destination="@id/setsFragment" />
+        <action
+            android:id="@+id/action_menuFragment_to_languageSetsFragment"
+            app:destination="@id/languageSetsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/setsFragment"
+        android:name="com.example.verbo.Sets.SetsFragment"
+        android:label="SetsFragment" >
+        <action
+            android:id="@+id/action_setsFragment_to_menuFragment"
+            app:destination="@id/menuFragment" />
+        <action
+            android:id="@+id/action_setsFragment_to_addSetFragment"
+            app:destination="@id/addSetFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addSetFragment"
+        android:name="com.example.verbo.AddSet.AddSetFragment"
+        android:label="fragment_add_set"
+        tools:layout="@layout/fragment_add_set" >
+        <action
+            android:id="@+id/action_addSetFragment_to_setsFragment"
+            app:destination="@id/setsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/languageSetsFragment"
+        android:name="com.example.verbo.LanguageSets.LanguageSetsFragment"
+        android:label="LanguageSetsFragment" >
+        <action
+            android:id="@+id/action_languageSetsFragment_to_menuFragment"
+            app:destination="@id/menuFragment" />
+        <action
+            android:id="@+id/action_languageSetsFragment_to_addRealSetFragment"
+            app:destination="@id/addRealSetFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addRealSetFragment"
+        android:name="com.example.verbo.AddRealSet.AddRealSetFragment"
+        android:label="AddRealSetFragment" >
+        <action
+            android:id="@+id/action_addRealSetFragment_to_languageSetsFragment"
+            app:destination="@id/languageSetsFragment" />
+        <action
+            android:id="@+id/action_addRealSetFragment_to_addWordFragment"
+            app:destination="@id/addWordFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addWordFragment"
+        android:name="com.example.verbo.AddWord.AddWordFragment"
+        android:label="AddWordFragment" >
+        <action
+            android:id="@+id/action_addWordFragment_to_languageSetsFragment"
+            app:destination="@id/languageSetsFragment" />
+    </fragment>
+</navigation>

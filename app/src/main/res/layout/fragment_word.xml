@@ -1,0 +1,39 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#000000"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:padding="8dp">
+
+    <!-- Language Name -->
+    <TextView
+        android:id="@+id/textViewWord"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="4"
+        android:text="Nazwa slowa"
+        android:textSize="25sp"
+        android:textColor="@android:color/white" />
+    <TextView
+        android:id="@+id/textViewSpace"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textAlignment="center"
+        android:text=" - "
+        android:textSize="40sp"
+        android:textColor="@android:color/white" />
+
+    <TextView
+        android:id="@+id/textViewTranslate"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="4"
+        android:text="Tlumaczenie"
+        android:textSize="25sp"
+        android:textColor="@android:color/white" />
+
+
+</LinearLayout>

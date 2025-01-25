@@ -1,3 +1,21 @@
 <resources>
     <string name="app_name">Verbo</string>
+    <string name="verbo">Verbo</string>
+    <string name="zestawy">Zestawy</string>
+    <string name="moje_j_zyki">Moje języki</string>
+    <string name="dodaj">Dodaj</string>
+    <string name="edytuj">Edytuj</string>
+    <string name="usu">Usuń</string>
+    <string name="podaj_j_zyk">Podaj język</string>
+    <string name="zapisz">Zapisz</string>
+    <string name="anuluj">Anuluj</string>
+    <string name="nazwa_zestawu">Nazwa zestawu</string>
+    <string name="podaj_s_wko">Podaj słówko</string>
+    <string name="podaj_t_umaczenie">Podaj tłumaczenie</string>
+    <string name="nazwa">Nazwa</string>
+    <string name="zako_cz">Zakończ</string>
+    <string name="dalej">Dalej</string>
+    <string name="pytania_zamkni_te">Pytania zamknięte</string>
+    <string name="pytania_otwarte">Pytania otwarte</string>
+    <string name="sprawd_si">Sprawdź się</string>
 </resources>
