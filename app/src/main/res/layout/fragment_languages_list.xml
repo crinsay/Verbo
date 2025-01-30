@@ -7,7 +7,7 @@
     android:padding="16dp">
 
     <Button
-        android:id="@+id/Powrot"
+        android:id="@+id/back_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="#e0da2f"
@@ -22,7 +22,7 @@
         android:paddingBottom="8dp" />
 
     <Button
-        android:id="@+id/DodajJezyk"
+        android:id="@+id/add_language_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:backgroundTint="#e0da2f"

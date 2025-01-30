@@ -7,10 +7,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.verbo.R
+import com.example.verbo.adapters.LanguagesRecyclerViewAdapter
+import com.example.verbo.databinding.FragmentLanguagesListBinding
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class LanguagesListFragment : Fragment() {
+
+    private lateinit var binding: FragmentLanguagesListBinding
+    private lateinit var languagesAdapter: LanguagesRecyclerViewAdapter
 
     companion object {
         fun newInstance() = LanguagesListFragment()
@@ -21,26 +33,55 @@ class LanguagesListFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // TODO: Use the ViewModel
+        viewModel.loadAllLanguages()
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.fragment_languages_list, container, false)
+        languagesAdapter = LanguagesRecyclerViewAdapter(mutableListOf())
+
+        //For test:
+        languagesAdapter.onItemClickListener = { languageId ->
+            val action = LanguagesListFragmentDirections.actionLanguagesListFragmentToAddLanguageFragment(languageId)
+            findNavController().navigate(action)
+        }
+
+        languagesAdapter.onItemLongClickListener = { view, language, position ->
+            //TODO: We need popup menu yet.
+        }
+
+        lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.languages.collect {
+                    languagesAdapter.fillWithData(it.toMutableList())
+                }
+            }
+        }
+
+        binding = FragmentLanguagesListBinding.inflate(inflater, container, false)
+        binding.apply {
+            recyclerViewLanguages.apply {
+                layoutManager = LinearLayoutManager(requireContext())
+                adapter = languagesAdapter
+            }
+        }
+
+        return binding.root
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val powrot = view.findViewById<Button>(R.id.Powrot)
-        val dodaj = view.findViewById<Button>(R.id.DodajJezyk)
 
-        powrot.setOnClickListener {
-            findNavController().navigate(R.id.action_languagesListFragment_to_menuFragment)
+        binding.apply {
+            backButton.setOnClickListener {
+                val action = LanguagesListFragmentDirections.actionLanguagesListFragmentToMenuFragment()
+                findNavController().navigate(action)
+            }
+            addLanguageButton.setOnClickListener {
+                val action = LanguagesListFragmentDirections.actionLanguagesListFragmentToAddLanguageFragment() //0L by default.
+                findNavController().navigate(action)
+            }
         }
-        dodaj.setOnClickListener {
-            findNavController().navigate(R.id.action_languagesListFragment_to_addLanguageFragment)
-        }
-
     }
 }
