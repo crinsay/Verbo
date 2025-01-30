@@ -43,6 +43,10 @@
         <action
             android:id="@+id/action_addLanguageFragment_to_languagesListFragment"
             app:destination="@id/languagesListFragment" />
+        <argument
+            android:name="languageId"
+            app:argType="long"
+            android:defaultValue="0L" />
     </fragment>
     <fragment
         android:id="@+id/setsFragment"
