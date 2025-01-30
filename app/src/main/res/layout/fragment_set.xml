@@ -16,19 +16,4 @@
         android:textSize="25sp"
         android:textColor="@android:color/white" />
 
-    <Button
-        android:id="@+id/buttonEdit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="#e0da2f"
-        android:textColor="@color/black"
-        android:text="@string/edytuj" />
-
-    <Button
-        android:id="@+id/buttonDelete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="#e0da2f"
-        android:textColor="@color/black"
-        android:text="@string/usu" />
 </LinearLayout>

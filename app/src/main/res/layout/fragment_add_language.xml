@@ -4,19 +4,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#404040"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".menu.MenuFragment">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/textView"
+
+
+    <EditText
+        android:id="@+id/editTextLanguage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/verbo"
-        android:textAlignment="center"
-        android:textSize="55sp"
-        android:background="#e0da2f"
-        android:textColor="@color/black"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="150dp"
+        android:backgroundTint="#e0da2f"
+        android:hint="@string/podaj_j_zyk"
+        android:inputType="text"
+        android:textColor="@android:color/white"
+        android:textColorHint="@android:color/darker_gray"
+        android:textSize="40sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -28,31 +32,27 @@
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView">
+        app:layout_constraintStart_toStartOf="parent">
 
         <Button
-            android:id="@+id/Zestawy"
+            android:id="@+id/Zapisz"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="#e0da2f"
             android:textColor="@color/black"
-            android:text="@string/zestawy"
+            android:text="@string/zapisz"
             android:textSize="40sp"
-            android:drawableLeft="@drawable/baseline_dataset"
             app:layout_constraintTop_toBottomOf="@+id/textView" />
 
         <Button
-            android:id="@+id/Jezyki"
+            android:id="@+id/Anuluj"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="#e0da2f"
             android:textColor="@color/black"
-            android:text="@string/moje_j_zyki"
+            android:text="@string/anuluj"
             android:textSize="40sp"
-            android:drawableLeft="@drawable/baseline_flag"
             app:layout_constraintTop_toBottomOf="@+id/textView" />
     </LinearLayout>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

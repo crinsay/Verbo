@@ -7,19 +7,46 @@
 
     <fragment
         android:id="@+id/menuFragment"
-        android:name="com.example.verbo.Menu.MenuFragment"
+        android:name="com.example.verbo.menu.MenuFragment"
         android:label="fragment_menu"
         tools:layout="@layout/fragment_menu" >
         <action
+            android:id="@+id/action_menuFragment_to_languagesListFragment"
+            app:destination="@id/languagesListFragment" />
+        <action
             android:id="@+id/action_menuFragment_to_setsFragment"
             app:destination="@id/setsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addWordFragment"
+        android:name="com.example.verbo.addword.AddWordFragment"
+        android:label="AddWordFragment" >
         <action
-            android:id="@+id/action_menuFragment_to_languageSetsFragment"
-            app:destination="@id/languageSetsFragment" />
+            android:id="@+id/action_addWordFragment_to_setsFragment"
+            app:destination="@id/setsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/languagesListFragment"
+        android:name="com.example.verbo.languageslist.LanguagesListFragment"
+        android:label="LanguagesListFragment" >
+        <action
+            android:id="@+id/action_languagesListFragment_to_menuFragment"
+            app:destination="@id/menuFragment" />
+        <action
+            android:id="@+id/action_languagesListFragment_to_addLanguageFragment"
+            app:destination="@id/addLanguageFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addLanguageFragment"
+        android:name="com.example.verbo.addlanguage.AddLanguageFragment"
+        android:label="AddLanguageFragment" >
+        <action
+            android:id="@+id/action_addLanguageFragment_to_languagesListFragment"
+            app:destination="@id/languagesListFragment" />
     </fragment>
     <fragment
         android:id="@+id/setsFragment"
-        android:name="com.example.verbo.Sets.SetsFragment"
+        android:name="com.example.verbo.sets.SetsFragment"
         android:label="SetsFragment" >
         <action
             android:id="@+id/action_setsFragment_to_menuFragment"
@@ -30,41 +57,13 @@
     </fragment>
     <fragment
         android:id="@+id/addSetFragment"
-        android:name="com.example.verbo.AddSet.AddSetFragment"
-        android:label="fragment_add_set"
-        tools:layout="@layout/fragment_add_set" >
+        android:name="com.example.verbo.addset.AddSetFragment"
+        android:label="AddSetFragment" >
         <action
             android:id="@+id/action_addSetFragment_to_setsFragment"
             app:destination="@id/setsFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/languageSetsFragment"
-        android:name="com.example.verbo.LanguageSets.LanguageSetsFragment"
-        android:label="LanguageSetsFragment" >
         <action
-            android:id="@+id/action_languageSetsFragment_to_menuFragment"
-            app:destination="@id/menuFragment" />
-        <action
-            android:id="@+id/action_languageSetsFragment_to_addRealSetFragment"
-            app:destination="@id/addRealSetFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/addRealSetFragment"
-        android:name="com.example.verbo.AddRealSet.AddRealSetFragment"
-        android:label="AddRealSetFragment" >
-        <action
-            android:id="@+id/action_addRealSetFragment_to_languageSetsFragment"
-            app:destination="@id/languageSetsFragment" />
-        <action
-            android:id="@+id/action_addRealSetFragment_to_addWordFragment"
+            android:id="@+id/action_addSetFragment_to_addWordFragment"
             app:destination="@id/addWordFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/addWordFragment"
-        android:name="com.example.verbo.AddWord.AddWordFragment"
-        android:label="AddWordFragment" >
-        <action
-            android:id="@+id/action_addWordFragment_to_languageSetsFragment"
-            app:destination="@id/languageSetsFragment" />
     </fragment>
 </navigation>
