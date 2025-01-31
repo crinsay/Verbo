@@ -1,5 +1,6 @@
 package com.example.verbo.addword
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.verbo.common.dtos.FlashcardDto
@@ -13,13 +14,18 @@ class AddWordViewModel @Inject constructor(
     private val flashcardRepository: IFlashcardRepository
 ): ViewModel() {
 
-    fun addFlashcard(deckId: Long, question: String, answer: String) {
-        viewModelScope.launch {
-            val newFlashcard = FlashcardDto(
-                wordDefinition = question,
-                wordTranslation = answer
-            )
-            flashcardRepository.insertFlashcard(newFlashcard, deckId)
+    val question = MutableLiveData<String>()
+    val answer = MutableLiveData<String>()
+
+    fun addFlashcard(deckId: Long) {
+        val questionValue = question.value ?: ""
+        val answerValue = answer.value ?: ""
+
+        if (questionValue.isNotBlank() && answerValue.isNotBlank()) {
+            viewModelScope.launch {
+                val newFlashcard = FlashcardDto(wordDefinition = questionValue, wordTranslation = answerValue)
+                flashcardRepository.insertFlashcard(newFlashcard, deckId)
+            }
         }
     }
 }

@@ -7,9 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.verbo.R
+import com.example.verbo.databinding.FragmentAddWordBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -17,12 +19,13 @@ class AddWordFragment : Fragment() {
 
     private val args: AddWordFragmentArgs by navArgs()
     private val deckId by lazy { args.deckId }
+    private lateinit var binding: FragmentAddWordBinding
+    private val viewModel: AddWordViewModel by viewModels()
 
     companion object {
         fun newInstance() = AddWordFragment()
     }
 
-    private val viewModel: AddWordViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,16 +37,23 @@ class AddWordFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.fragment_add_word, container, false)
+        binding = FragmentAddWordBinding.inflate(inflater, container, false)
+        binding.wordViewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
+        return binding.root
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val zakoncz = view.findViewById<Button>(R.id.Zakoncz)
-        val dalej = view.findViewById<Button>(R.id.Dalej)
+        binding.nextWordButton.setOnClickListener {
+            val question = binding.addWord.text.toString()
+            val answer = binding.addWordTranslate.text.toString()
 
-
-        zakoncz.setOnClickListener {
-            findNavController().navigate(R.id.action_addWordFragment_to_setsFragment)
+            if (question.isNotBlank() && answer.isNotBlank()) {
+                viewModel.addFlashcard(deckId)
+                Toast.makeText(context, "Fiszka dodana!", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(context, "Proszę wypełnić oba pola", Toast.LENGTH_SHORT).show()
+            }
         }
 
     }
