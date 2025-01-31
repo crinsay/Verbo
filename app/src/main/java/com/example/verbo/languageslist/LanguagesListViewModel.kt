@@ -23,4 +23,9 @@ class LanguagesListViewModel @Inject constructor(
             _languages.value = languages.toMutableList()
         }
     }
+
+    suspend fun deleteLanguage(LanguageToDelteDto: LanguageDto){
+        languageRepository.deleteLanguage(LanguageToDelteDto)
+        _languages.value.remove(LanguageToDelteDto)
+    }
 }
