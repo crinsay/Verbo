@@ -23,7 +23,10 @@ class SetRecyclerViewAdapter (private var items: MutableList<DeckDto>) : Recycle
 
         return ViewHolder(binding)
     }
-
+    fun itemRemoved(position: Int) {
+        items.removeAt(position)
+        notifyItemRemoved(position)
+    }
     override fun getItemCount(): Int = items.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

@@ -3,6 +3,7 @@ package com.example.verbo.sets
 import androidx.fragment.app.viewModels
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -28,6 +29,8 @@ import kotlinx.coroutines.launch
 import android.widget.Spinner
 import android.widget.ArrayAdapter
 import android.widget.AdapterView
+import android.widget.PopupMenu
+import com.example.verbo.addset.AddSetFragmentDirections
 
 @AndroidEntryPoint
 class SetsFragment : Fragment() {
@@ -56,6 +59,34 @@ class SetsFragment : Fragment() {
         setsAdapter.onItemClickListener = { setId ->
             val action = SetsFragmentDirections.actionSetsFragmentToAddSetFragment(setId)
             findNavController().navigate(action)
+        }
+        setsAdapter.onItemLongClickListener = { view, set, position ->
+            val popupMenu = PopupMenu(requireContext(), view)
+
+            popupMenu.menuInflater
+                .inflate(R.menu.menu_set_popup, popupMenu.menu)
+            popupMenu.gravity = Gravity.END
+
+            popupMenu.setOnMenuItemClickListener { menuItem ->
+                when (menuItem.itemId) {
+                    R.id.delete_option -> {
+                        lifecycleScope.launch {
+                            viewModel.deleteDeck(set)
+                            setsAdapter.itemRemoved(position)
+                        }
+                        true
+                    }
+                    R.id.edit_option -> {
+                        val action = SetsFragmentDirections.actionSetsFragmentToEditSetFragment(set.deckId)
+                        findNavController().navigate(action)
+                        true
+                    }
+                    else -> false
+                }
+            }
+
+            // Wyświetlamy menu
+            popupMenu.show()
         }
 
         binding.recyclerViewSets.apply {

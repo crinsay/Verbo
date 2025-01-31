@@ -62,6 +62,9 @@
         <action
             android:id="@+id/action_setsFragment_to_addSetFragment"
             app:destination="@id/addSetFragment" />
+        <action
+            android:id="@+id/action_setsFragment_to_editSetFragment"
+            app:destination="@id/editSetFragment" />
     </fragment>
     <fragment
         android:id="@+id/addSetFragment"
@@ -75,6 +78,18 @@
             app:destination="@id/addWordFragment" />
         <argument
             android:name="languageId"
+            app:argType="long"
+            android:defaultValue="0L" />
+    </fragment>
+    <fragment
+        android:id="@+id/editSetFragment"
+        android:name="com.example.verbo.editset.EditSetFragment"
+        android:label="EditSetFragment" >
+        <action
+            android:id="@+id/action_editSetFragment_to_setsFragment"
+            app:destination="@id/setsFragment" />
+        <argument
+            android:name="deckId"
             app:argType="long"
             android:defaultValue="0L" />
     </fragment>

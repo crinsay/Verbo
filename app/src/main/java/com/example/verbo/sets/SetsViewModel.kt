@@ -40,4 +40,16 @@ class SetsViewModel @Inject constructor(
             _decks.value = decks.toMutableList()
         }
     }
+    suspend fun deleteDeck(DeckToDelteDto: DeckDto){
+        deckRepository.deleteDeck(DeckToDelteDto)
+        _decks.value.remove(DeckToDelteDto)
+    }
+    /*
+    suspend fun editDeck(DeckToEditDto: DeckDto, languageId: Long) {
+        deckRepository.updateDeck(DeckToEditDto, languageId)
+        //Moze trzeba tutaj wiecej, nie wiem jeszcze
+    }
+
+     */
+
 }
