@@ -115,7 +115,7 @@ class SetsFragment : Fragment() {
             addSetButton.setOnClickListener {
                 Log.d("SetsFragment", "Kliknięto dodaj zestaw, nawiguję do AddSetFragment")
                 val action = SetsFragmentDirections
-                    .actionSetsFragmentToAddSetFragment(0L, selectedLanguageId)
+                    .actionSetsFragmentToAddSetFragment(selectedLanguageId)
                 findNavController().navigate(action)
             }
         }

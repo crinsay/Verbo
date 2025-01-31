@@ -25,6 +25,9 @@ class AddWordViewModel @Inject constructor(
             viewModelScope.launch {
                 val newFlashcard = FlashcardDto(wordDefinition = questionValue, wordTranslation = answerValue)
                 flashcardRepository.insertFlashcard(newFlashcard, deckId)
+
+                question.postValue("")
+                answer.postValue("")
             }
         }
     }

@@ -12,7 +12,7 @@ import com.example.verbo.models.entities.Deck
 @Dao
 interface DeckDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertDeck(newDeck: Deck)
+    suspend fun insertDeck(newDeck: Deck) : Long
 
     @Update
     suspend fun updateDeck(updatedDeck: Deck)

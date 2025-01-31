@@ -1,5 +1,6 @@
 package com.example.verbo.addset
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -17,8 +18,10 @@ class AddSetViewModel @Inject constructor(
 ): ViewModel() {
     val deckName = MutableLiveData<String>()
     private var currentLanguageId: Long = -1L
+    var deckId = 0L
 
     fun setLanguageId(languageId: Long) {
+        Log.d("AddWordFragment", "Otrzymano languageId: ${languageId}")
         currentLanguageId = languageId
     }
 
@@ -30,24 +33,18 @@ class AddSetViewModel @Inject constructor(
     }
 
 
-    fun saveDeck(deckId: Long) {
-        viewModelScope.launch {
-            val deckNameValue = deckName.value?.trim() ?: return@launch
-            if (currentLanguageId == -1L) {
+    suspend fun saveDeck() {
 
-                return@launch
-            }
+            val deckNameValue = deckName.value!!.trim()
 
             val deckDto = DeckDto(
-                deckId = deckId,
+                deckId = 0L,
                 name = deckNameValue,
             )
 
-            if (deckId != 0L) {
-                deckRepository.updateDeck(deckDto, currentLanguageId)
-            } else {
-                deckRepository.insertDeck(deckDto, currentLanguageId)
-            }
-        }
+            val newDeckId = deckRepository.insertDeck(deckDto, currentLanguageId)
+            deckId = newDeckId
+
+
     }
 }

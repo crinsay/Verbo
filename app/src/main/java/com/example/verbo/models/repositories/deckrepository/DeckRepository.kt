@@ -10,11 +10,12 @@ import javax.inject.Inject
 class DeckRepository @Inject constructor(
     private val deckDao: DeckDao
 ): IDeckRepository {
-    override suspend fun insertDeck(newDeckDto: DeckDto, languageId: Long) {
+    override suspend fun insertDeck(newDeckDto: DeckDto, languageId: Long) : Long {
         val newDeck = newDeckDto.mapToDeck()
         newDeck.languageId = languageId
 
-        deckDao.insertDeck(newDeck)
+        val newId = deckDao.insertDeck(newDeck)
+        return newId
     }
 
     override suspend fun updateDeck(updatedDeckDto: DeckDto, languageId: Long) {

@@ -2,6 +2,7 @@ package com.example.verbo.addword
 
 import androidx.fragment.app.viewModels
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -18,7 +19,6 @@ import dagger.hilt.android.AndroidEntryPoint
 class AddWordFragment : Fragment() {
 
     private val args: AddWordFragmentArgs by navArgs()
-    private val deckId by lazy { args.deckId }
     private lateinit var binding: FragmentAddWordBinding
     private val viewModel: AddWordViewModel by viewModels()
 
@@ -47,9 +47,10 @@ class AddWordFragment : Fragment() {
         binding.nextWordButton.setOnClickListener {
             val question = binding.addWord.text.toString()
             val answer = binding.addWordTranslate.text.toString()
+            Log.d("AddWordFragment", "deckId: ${args.deckId}, question: $question, answer: $answer")
 
             if (question.isNotBlank() && answer.isNotBlank()) {
-                viewModel.addFlashcard(deckId)
+                viewModel.addFlashcard(args.deckId)
                 Toast.makeText(context, "Fiszka dodana!", Toast.LENGTH_SHORT).show()
             } else {
                 Toast.makeText(context, "Proszę wypełnić oba pola", Toast.LENGTH_SHORT).show()

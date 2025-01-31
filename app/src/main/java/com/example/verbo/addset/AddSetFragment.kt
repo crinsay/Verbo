@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.verbo.R
@@ -16,6 +17,7 @@ import com.example.verbo.databinding.FragmentAddLanguageBinding
 import com.example.verbo.databinding.FragmentAddSetBinding
 import com.example.verbo.databinding.FragmentSetsBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class AddSetFragment : Fragment() {
@@ -31,9 +33,6 @@ class AddSetFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        if (args.setId != 0L){
-            viewModel.getDeck(args.setId)
-        }
         viewModel.setLanguageId(args.languageId)
 
     }
@@ -61,11 +60,12 @@ class AddSetFragment : Fragment() {
                             Toast.LENGTH_SHORT
                         ).show()
                     } else {
+                        lifecycleScope.launch { //BO NIE NADAZA
+                            viewModel.saveDeck()
+                            val action = AddSetFragmentDirections.actionAddSetFragmentToAddWordFragment(viewModel.deckId)
+                            findNavController().navigate(action)
+                        }
 
-                        viewModel.saveDeck(args.setId)
-                        val action =
-                            AddSetFragmentDirections.actionAddSetFragmentToAddWordFragment(args.setId)
-                        findNavController().navigate(action)
                     }
 
             }
