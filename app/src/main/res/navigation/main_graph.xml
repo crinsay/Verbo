@@ -28,6 +28,9 @@
             android:name="deckId"
             app:argType="long"
             android:defaultValue="0L" />
+        <action
+            android:id="@+id/action_addWordFragment_to_setsFragment2"
+            app:destination="@id/setsFragment" />
     </fragment>
     <fragment
         android:id="@+id/languagesListFragment"

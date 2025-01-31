@@ -13,6 +13,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.verbo.R
 import com.example.verbo.databinding.FragmentAddWordBinding
+import com.example.verbo.languageslist.LanguagesListFragmentDirections
+import com.example.verbo.sets.SetsFragmentDirections
+import com.example.verbo.word.WordFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -55,6 +58,10 @@ class AddWordFragment : Fragment() {
             } else {
                 Toast.makeText(context, "Proszę wypełnić oba pola", Toast.LENGTH_SHORT).show()
             }
+        }
+        binding.exitButton.setOnClickListener {
+            val action = AddWordFragmentDirections.actionAddWordFragmentToSetsFragment()
+            findNavController().navigate(action)
         }
 
     }

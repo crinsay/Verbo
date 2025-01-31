@@ -85,7 +85,6 @@ class SetsFragment : Fragment() {
                 }
             }
 
-            // Wyświetlamy menu
             popupMenu.show()
         }
 
