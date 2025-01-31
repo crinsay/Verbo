@@ -2,11 +2,13 @@ package com.example.verbo.languageslist
 
 import androidx.fragment.app.viewModels
 import android.os.Bundle
+import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.PopupMenu
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -49,7 +51,28 @@ class LanguagesListFragment : Fragment() {
         }
 
         languagesAdapter.onItemLongClickListener = { view, language, position ->
-            //TODO: We need popup menu yet.
+            val popupMenu = PopupMenu(requireContext(), view)
+
+            popupMenu.menuInflater
+                .inflate(R.menu.menu_language_delete, popupMenu.menu)
+            popupMenu.gravity = Gravity.END
+
+
+            popupMenu.setOnMenuItemClickListener { menuItem ->
+                when (menuItem.itemId) {
+                    R.id.delete_option -> {
+                        lifecycleScope.launch {
+                            viewModel.deleteLanguage(language)
+                            languagesAdapter.itemRemoved(position)
+                        }
+                        true
+                    }
+                    else -> false
+                }
+            }
+
+            // Wyświetlamy menu
+            popupMenu.show()
         }
 
         lifecycleScope.launch {
