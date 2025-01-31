@@ -64,7 +64,7 @@ class AddSetFragment : Fragment() {
 
                         viewModel.saveDeck(args.setId)
                         val action =
-                            AddSetFragmentDirections.actionAddSetFragmentToAddWordFragment()
+                            AddSetFragmentDirections.actionAddSetFragmentToAddWordFragment(args.setId)
                         findNavController().navigate(action)
                     }
 

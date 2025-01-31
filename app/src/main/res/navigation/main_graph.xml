@@ -24,6 +24,10 @@
         <action
             android:id="@+id/action_addWordFragment_to_setsFragment"
             app:destination="@id/setsFragment" />
+        <argument
+            android:name="deckId"
+            app:argType="long"
+            android:defaultValue="0L" />
     </fragment>
     <fragment
         android:id="@+id/languagesListFragment"
