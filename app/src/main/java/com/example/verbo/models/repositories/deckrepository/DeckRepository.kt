@@ -18,11 +18,13 @@ class DeckRepository @Inject constructor(
         return newId
     }
 
-    override suspend fun updateDeck(updatedDeckDto: DeckDto, languageId: Long) {
+    override suspend fun updateDeck(updatedDeckDto: DeckDto, languageId: Long) : Long {
         val updatedDeck = updatedDeckDto.mapToDeck()
         updatedDeck.languageId = languageId
 
-        deckDao.updateDeck(updatedDeck)
+        val deckId = deckDao.updateDeck(updatedDeck)
+        return deckId
+
     }
 
     override suspend fun deleteDeck(deckToDeleteDto: DeckDto) {

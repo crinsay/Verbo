@@ -95,5 +95,9 @@
             android:name="deckId"
             app:argType="long"
             android:defaultValue="0L" />
+        <argument
+            android:name="languageId"
+            app:argType="long"
+            android:defaultValue="0L" />
     </fragment>
 </navigation>
