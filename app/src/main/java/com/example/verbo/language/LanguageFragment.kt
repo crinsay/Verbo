@@ -19,7 +19,7 @@ class LanguageFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // TODO: Use the ViewModel
+        // TODO: Use the ViewModel to jest z recycle view wiec nie potrzebne
     }
 
     override fun onCreateView(

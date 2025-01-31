@@ -69,5 +69,13 @@
         <action
             android:id="@+id/action_addSetFragment_to_addWordFragment"
             app:destination="@id/addWordFragment" />
+        <argument
+            android:name="setId"
+            app:argType="long"
+            android:defaultValue="0L" />
+        <argument
+            android:name="languageId"
+            app:argType="long"
+            android:defaultValue="0L" />
     </fragment>
 </navigation>

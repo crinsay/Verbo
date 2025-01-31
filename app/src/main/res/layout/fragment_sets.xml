@@ -7,7 +7,7 @@
     android:background="#404040">
 
     <Button
-        android:id="@+id/Powrot"
+        android:id="@+id/back_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="#e0da2f"
@@ -33,7 +33,7 @@
         android:scrollbars="vertical" />
 
     <Button
-        android:id="@+id/buttonAddSet"
+        android:id="@+id/add_set_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:backgroundTint="#e0da2f"
