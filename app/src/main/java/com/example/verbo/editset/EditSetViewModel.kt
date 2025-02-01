@@ -61,15 +61,27 @@ class EditSetViewModel@Inject constructor(
     }
 
     fun updateDeckName(newName: String) {
+        Log.d("EditSetViewModel", "updateDeckName called with: $newName")
         deckName.value = newName
+        viewModelScope.launch {
+            saveDeckNameToDatabase(newName)
+        }
     }
+    private suspend fun saveDeckNameToDatabase(newName: String) {
+        val deckDto = DeckDto(
+            deckId = currentDeckId,
+            name = newName
+        )
+        Log.d("EditSetViewModel", "Saving to DB: ${deckDto.name}")
 
+        deckRepository.updateDeck(deckDto, currentLanguageId)
+    }
     suspend fun updateDeck() {
         val deckNameValue = deckName.value!!.trim()
 
         val deckDto = DeckDto(
             deckId = currentDeckId,
-            name = deckNameValue ,
+            name = deckNameValue
         )
         deckRepository.updateDeck(deckDto, currentLanguageId)
 

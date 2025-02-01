@@ -22,7 +22,8 @@ class DeckRepository @Inject constructor(
         val updatedDeck = updatedDeckDto.mapToDeck()
         updatedDeck.languageId = languageId
 
-       deckDao.updateDeck(updatedDeck)
+        deckDao.insertDeck(updatedDeck)
+
 
     }
 

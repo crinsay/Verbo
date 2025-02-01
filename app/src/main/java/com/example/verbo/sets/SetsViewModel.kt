@@ -40,6 +40,17 @@ class SetsViewModel @Inject constructor(
             _decks.value = decks.toMutableList()
         }
     }
+    fun refreshDecks(languageId: Long) {
+        viewModelScope.launch {
+            val decks = if (languageId != -1L) {
+                deckRepository.getDecksByLanguageId(languageId)
+            } else {
+                deckRepository.getDecksByLanguageId(languageId)
+            }
+            _decks.value = decks.toMutableList()
+        }
+    }
+
     suspend fun deleteDeck(DeckToDelteDto: DeckDto){
         deckRepository.deleteDeck(DeckToDelteDto)
         _decks.value.remove(DeckToDelteDto)

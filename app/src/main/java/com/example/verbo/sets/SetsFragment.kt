@@ -137,7 +137,10 @@ class SetsFragment : Fragment() {
             }
         }
     }
-
+    override fun onResume() {
+        super.onResume()
+        viewModel.refreshDecks(selectedLanguageId)
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {

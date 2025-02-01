@@ -2,6 +2,7 @@ package com.example.verbo.editset
 
 import androidx.fragment.app.viewModels
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -41,6 +42,8 @@ class EditSetFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.d("EditSetFragment", "Otrzymane argumenty: deckId=${args.deckId}, languageId=${args.languageId}")
+
         viewModel.setDeckId(args.deckId)
         viewModel.setLanguageId(args.languageId)
         viewModel.loadDeckData()
@@ -69,7 +72,9 @@ class EditSetFragment : Fragment() {
                     R.id.delete_option -> {
                         lifecycleScope.launch {
                             viewModel.deleteWord(word)
-                            wordAdapter.itemRemoved(position)
+                            if (position >= 0) {
+                                wordAdapter.itemRemoved(position)
+                            }
                         }
                         true
                     }
@@ -120,12 +125,9 @@ class EditSetFragment : Fragment() {
 
         binding.apply {
             saveNameButton.setOnClickListener {
-                val newDeckName = textViewSetName.text.toString().trim()
+                val newDeckName = binding.textViewSetName.text.toString().trim()
                 viewModel.updateDeckName(newDeckName)
-                viewLifecycleOwner.lifecycleScope.launch {
-                    //viewModel.updateDeck()
-                    Toast.makeText(requireContext(), "Zapisano zmiany", Toast.LENGTH_SHORT).show()
-                }
+                Toast.makeText(requireContext(), "Zapisano zmiany", Toast.LENGTH_SHORT).show()
             }
 
             Powrot.setOnClickListener {
