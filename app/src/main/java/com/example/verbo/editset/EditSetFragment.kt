@@ -23,6 +23,7 @@ import com.example.verbo.addset.AddSetViewModel
 import com.example.verbo.databinding.FragmentAddSetBinding
 import com.example.verbo.databinding.FragmentEditSetBinding
 import com.example.verbo.languageslist.LanguagesListFragmentDirections
+import com.example.verbo.sets.SetsFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -52,9 +53,7 @@ class EditSetFragment : Fragment() {
 
         wordAdapter = WordsRecyclerViewAdapter(mutableListOf())
 
-        wordAdapter.onItemClickListener = { flashcardId ->
-            val action = EditSetFragmentDirections.actionEditSetFragmentToEditWordFragment(flashcardId)
-            findNavController().navigate(action)
+        wordAdapter.onItemClickListener = { //pozniej przejscie do testu
         }
 
         wordAdapter.onItemLongClickListener = { view, word, position ->
@@ -74,8 +73,15 @@ class EditSetFragment : Fragment() {
                         }
                         true
                     }
+                    R.id.edit_option -> {
+                        val flashcardId = word.flashcardId
+                        val action = EditSetFragmentDirections.actionEditSetFragmentToEditWordFragment(flashcardId)
+                        findNavController().navigate(action)
+                        true
+                    }
                     else -> false
                 }
+
             }
             popupMenu.show()
 
