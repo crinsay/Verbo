@@ -15,7 +15,7 @@ interface DeckDao {
     suspend fun insertDeck(newDeck: Deck) : Long
 
     @Update
-    suspend fun updateDeck(updatedDeck: Deck) : Long
+    suspend fun updateDeck(updatedDeck: Deck)
 
     @Delete
     suspend fun deleteDeck(deckToDelete: Deck)

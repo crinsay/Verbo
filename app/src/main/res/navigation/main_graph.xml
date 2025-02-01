@@ -99,5 +99,20 @@
             android:name="languageId"
             app:argType="long"
             android:defaultValue="0L" />
+        <action
+            android:id="@+id/action_editSetFragment_to_editWordFragment"
+            app:destination="@id/editWordFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editWordFragment"
+        android:name="com.example.verbo.editword.EditWordFragment"
+        android:label="EditWordFragment" >
+        <action
+            android:id="@+id/action_editWordFragment_to_editSetFragment"
+            app:destination="@id/editSetFragment" />
+        <argument
+            android:name="flashcardId"
+            app:argType="long"
+            android:defaultValue="0L" />
     </fragment>
 </navigation>
