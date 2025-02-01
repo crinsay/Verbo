@@ -56,7 +56,8 @@ class EditSetViewModel@Inject constructor(
     suspend fun deleteWord(wordToDelteDto: FlashcardDto){
         flashCardRepository.deleteFlashcard(wordToDelteDto)
         _flashes.value = _flashes.value.filter {
-            it.flashcardId != wordToDelteDto.flashcardId }
+            it.flashcardId != wordToDelteDto.flashcardId
+        }
     }
 
     fun updateDeckName(newName: String) {

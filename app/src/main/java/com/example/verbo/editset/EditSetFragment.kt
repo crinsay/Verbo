@@ -43,7 +43,7 @@ class EditSetFragment : Fragment() {
         super.onCreate(savedInstanceState)
         viewModel.setDeckId(args.deckId)
         viewModel.setLanguageId(args.languageId)
-        //viewModel.loadDeckData() podobno to się zawiera już w setdeckId
+        viewModel.loadDeckData()
     }
 
     override fun onCreateView(
@@ -86,7 +86,13 @@ class EditSetFragment : Fragment() {
             popupMenu.show()
 
         }
-
+        lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.deckName.observe(viewLifecycleOwner) { name ->
+                    binding.textViewSetName.setText(name)
+                }
+            }
+        }
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.flashes.collect {
@@ -117,7 +123,7 @@ class EditSetFragment : Fragment() {
                 val newDeckName = textViewSetName.text.toString().trim()
                 viewModel.updateDeckName(newDeckName)
                 viewLifecycleOwner.lifecycleScope.launch {
-                    viewModel.updateDeck()
+                    //viewModel.updateDeck()
                     Toast.makeText(requireContext(), "Zapisano zmiany", Toast.LENGTH_SHORT).show()
                 }
             }
