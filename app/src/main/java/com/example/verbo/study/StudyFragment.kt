@@ -30,7 +30,7 @@ class StudyFragment : Fragment() {
         }
         binding.closedQuestionsButton.setOnClickListener {
             val action = StudyFragmentDirections.actionStudyFragmentToCloseQuestionFragment(
-                args.languageId, args.deckId
+                args.deckId
             )
             findNavController().navigate(action)
         }
