@@ -129,7 +129,7 @@ class SetsFragment : Fragment() {
                             }
 
                             override fun onNothingSelected(parent: AdapterView<*>?) {
-                                // Opcjonalnie możesz tu coś dodać
+
                             }
                         }
                     }

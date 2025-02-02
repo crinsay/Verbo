@@ -20,6 +20,7 @@ import com.example.verbo.R
 import com.example.verbo.adapters.LanguagesRecyclerViewAdapter
 import com.example.verbo.adapters.WordsRecyclerViewAdapter
 import com.example.verbo.addset.AddSetFragmentArgs
+import com.example.verbo.addset.AddSetFragmentDirections
 import com.example.verbo.addset.AddSetViewModel
 import com.example.verbo.databinding.FragmentAddSetBinding
 import com.example.verbo.databinding.FragmentEditSetBinding
@@ -129,11 +130,13 @@ class EditSetFragment : Fragment() {
                 viewModel.updateDeckName(newDeckName)
                 Toast.makeText(requireContext(), "Zapisano zmiany", Toast.LENGTH_SHORT).show()
             }
-
-            Powrot.setOnClickListener {
+            addWordButton.setOnClickListener{
                 lifecycleScope.launch {
-                    viewModel.updateDeck()
+                    val action = EditSetFragmentDirections.actionEditSetFragmentToAddWordFragment(args.deckId)
+                    findNavController().navigate(action)
                 }
+            }
+            Powrot.setOnClickListener {
                 val action = EditSetFragmentDirections.actionEditSetFragmentToSetsFragment()
                 findNavController().navigate(action)
             }

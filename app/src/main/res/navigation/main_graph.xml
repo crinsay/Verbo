@@ -102,6 +102,9 @@
         <action
             android:id="@+id/action_editSetFragment_to_editWordFragment"
             app:destination="@id/editWordFragment" />
+        <action
+            android:id="@+id/action_editSetFragment_to_addWordFragment"
+            app:destination="@id/addWordFragment" />
     </fragment>
     <fragment
         android:id="@+id/editWordFragment"

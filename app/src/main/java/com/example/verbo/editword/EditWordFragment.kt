@@ -7,7 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.verbo.R
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class EditWordFragment : Fragment() {
 
     companion object {

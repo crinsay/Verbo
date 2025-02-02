@@ -53,11 +53,18 @@ class EditSetViewModel@Inject constructor(
     }
 
     //CRUD
+    /*
     suspend fun deleteWord(wordToDelteDto: FlashcardDto){
         flashCardRepository.deleteFlashcard(wordToDelteDto)
         _flashes.value = _flashes.value.filter {
             it.flashcardId != wordToDelteDto.flashcardId
         }
+    }
+
+     */
+    suspend fun deleteWord(wordToDelteDto: FlashcardDto){
+        flashCardRepository.deleteFlashcard(wordToDelteDto)
+        //_flashes.value.remove(wordToDelteDto) Nie działa value remove jakos
     }
 
     fun updateDeckName(newName: String) {
@@ -76,6 +83,7 @@ class EditSetViewModel@Inject constructor(
 
         deckRepository.updateDeck(deckDto, currentLanguageId)
     }
+    /*
     suspend fun updateDeck() {
         val deckNameValue = deckName.value!!.trim()
 
@@ -86,4 +94,6 @@ class EditSetViewModel@Inject constructor(
         deckRepository.updateDeck(deckDto, currentLanguageId)
 
     }
+    */
+
 }
