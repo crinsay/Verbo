@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.verbo.R
 import com.example.verbo.adapters.LanguagesRecyclerViewAdapter
 import com.example.verbo.databinding.FragmentLanguagesListBinding
+import com.example.verbo.editset.EditSetFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -65,6 +66,11 @@ class LanguagesListFragment : Fragment() {
                             viewModel.deleteLanguage(language)
                             languagesAdapter.itemRemoved(position)
                         }
+                        true
+                    }
+                    R.id.edit_option -> {
+                        val action = LanguagesListFragmentDirections.actionLanguagesListFragmentToEditLanguageFragment(languageId = language.languageId)
+                        findNavController().navigate(action)
                         true
                     }
                     else -> false

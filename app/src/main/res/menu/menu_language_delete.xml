@@ -4,4 +4,7 @@
     <item
         android:id="@+id/delete_option"
         android:title="Usuń Język" />
+    <item
+        android:id="@+id/edit_option"
+        android:title="Edytuj Język"/>
 </menu>

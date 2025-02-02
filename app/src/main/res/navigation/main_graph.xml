@@ -17,6 +17,7 @@
             android:id="@+id/action_menuFragment_to_setsFragment"
             app:destination="@id/setsFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/addWordFragment"
         android:name="com.example.verbo.addword.AddWordFragment"
@@ -42,6 +43,9 @@
         <action
             android:id="@+id/action_languagesListFragment_to_addLanguageFragment"
             app:destination="@id/addLanguageFragment" />
+        <action
+            android:id="@+id/action_languagesListFragment_to_editLanguageFragment"
+            app:destination="@id/editLanguageFragment" />
     </fragment>
     <fragment
         android:id="@+id/addLanguageFragment"
@@ -54,6 +58,17 @@
             android:name="languageId"
             app:argType="long"
             android:defaultValue="0L" />
+    </fragment>
+    <fragment
+        android:id="@+id/editLanguageFragment"
+        android:name="com.example.verbo.editlanguage.EditLanguageFragment"
+        android:label="EditLanguageFragment">
+        <argument
+            android:name="languageId"
+            app:argType="long" />
+        <action
+            android:id="@+id/actionEditLanguageFragmentToLanguagesListFragment"
+            app:destination="@id/languagesListFragment" />
     </fragment>
     <fragment
         android:id="@+id/setsFragment"
