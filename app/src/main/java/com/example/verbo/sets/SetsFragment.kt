@@ -79,7 +79,7 @@ class SetsFragment : Fragment() {
                     }
                     R.id.edit_option -> {
                         Toast.makeText(requireContext(), "Przekazuje id: ${set.deckId}", Toast.LENGTH_LONG).show()
-                        val action = SetsFragmentDirections.actionSetsFragmentToEditSetFragment(set.deckId)
+                        val action = SetsFragmentDirections.actionSetsFragmentToEditSetFragment(set.deckId, selectedLanguageId)
                         findNavController().navigate(action)
                         true
                     }

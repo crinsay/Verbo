@@ -69,7 +69,6 @@ class EditSetViewModel@Inject constructor(
 
     fun updateDeckName(newName: String) {
         Log.d("EditSetViewModel", "updateDeckName called with: $newName")
-        deckName.value = newName
         viewModelScope.launch {
             saveDeckNameToDatabase(newName)
         }

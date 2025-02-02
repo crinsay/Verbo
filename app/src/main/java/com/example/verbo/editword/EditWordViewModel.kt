@@ -26,10 +26,9 @@ class EditWordViewModel @Inject constructor(
     fun loadFlashcard(flashcardId: Long) {
         viewModelScope.launch {
             val flashcard = flashcardRepository.getFlashcardById(flashcardId)
-            flashcard?.let {
-                question.postValue(it.wordDefinition)
-                answer.postValue(it.wordTranslation)
-            }
+                question.postValue(flashcard.wordDefinition)
+                answer.postValue(flashcard.wordTranslation)
+
         }
     }
 
