@@ -117,5 +117,9 @@
             android:name="flashcardId"
             app:argType="long"
             android:defaultValue="0L" />
+        <argument
+            android:name="deckId"
+            app:argType="long"
+            android:defaultValue="0L" />
     </fragment>
 </navigation>

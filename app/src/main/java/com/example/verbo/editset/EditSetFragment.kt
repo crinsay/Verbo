@@ -81,7 +81,7 @@ class EditSetFragment : Fragment() {
                     }
                     R.id.edit_option -> {
                         val flashcardId = word.flashcardId
-                        val action = EditSetFragmentDirections.actionEditSetFragmentToEditWordFragment(flashcardId)
+                        val action = EditSetFragmentDirections.actionEditSetFragmentToEditWordFragment(flashcardId, args.deckId)
                         findNavController().navigate(action)
                         true
                     }

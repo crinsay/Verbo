@@ -3,4 +3,7 @@
     <item
         android:id="@+id/delete_option"
         android:title="Usuń Słowo" />
+    <item
+        android:id="@+id/edit_option"
+        android:title="Edytuj Slowo"/>
 </menu>
