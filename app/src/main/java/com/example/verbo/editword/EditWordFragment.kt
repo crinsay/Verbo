@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.lifecycle.ViewModel
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.verbo.R
@@ -36,6 +37,7 @@ class EditWordFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentEditWordBinding.inflate(inflater, container, false)
+        binding.editWordViewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
         return binding.root
     }
@@ -45,13 +47,13 @@ class EditWordFragment : Fragment() {
         viewModel.loadFlashcard(args.flashcardId)
 
         binding.Zapisz.setOnClickListener {
-            val question = binding.editWord.text.toString()
-            val answer = binding.editWordTranslate.text.toString()
             viewModel.updateFlashcard(args.flashcardId)
-            findNavController().navigateUp()
+            val action = EditWordFragmentDirections.actionEditWordFragmentToEditSetFragment(args.deckId)
+            findNavController().navigate(action)
         }
         binding.Anuluj.setOnClickListener{
-            findNavController().navigateUp()
+            val action = EditWordFragmentDirections.actionEditWordFragmentToEditSetFragment(args.deckId)
+            findNavController().navigate(action)
         }
     }
 }

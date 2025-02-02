@@ -121,5 +121,8 @@
             android:name="deckId"
             app:argType="long"
             android:defaultValue="0L" />
+        <action
+            android:id="@+id/action_editWordFragment_to_setsFragment"
+            app:destination="@id/setsFragment" />
     </fragment>
 </navigation>
