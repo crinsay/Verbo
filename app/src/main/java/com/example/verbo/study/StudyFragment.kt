@@ -6,26 +6,41 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.verbo.R
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
+import com.example.verbo.databinding.FragmentStudyBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class StudyFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = StudyFragment()
-    }
-
+    private lateinit var binding: FragmentStudyBinding
+    private val args: StudyFragmentArgs by navArgs()
     private val viewModel: StudyViewModel by viewModels()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        // TODO: Use the ViewModel
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.fragment_study, container, false)
+        binding = FragmentStudyBinding.inflate(inflater, container, false)
+
+        binding.cancelButton.setOnClickListener {
+            val action = StudyFragmentDirections.actionStudyFragmentToSetsFragment()
+            findNavController().navigate(action)
+        }
+        binding.closedQuestionsButton.setOnClickListener {
+            val action = StudyFragmentDirections.actionStudyFragmentToCloseQuestionFragment(
+                args.languageId, args.deckId
+            )
+            findNavController().navigate(action)
+        }
+        binding.openQuestionsButton.setOnClickListener {
+            val action = StudyFragmentDirections.actionStudyFragmentToOpenQuestionFragment(
+                args.languageId, args.deckId
+            )
+            findNavController().navigate(action)
+        }
+
+        return binding.root
     }
 }

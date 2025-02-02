@@ -58,7 +58,7 @@ class SetsFragment : Fragment() {
         setsAdapter = SetRecyclerViewAdapter(mutableListOf())
 
         setsAdapter.onItemClickListener = { setId ->
-            val action = SetsFragmentDirections.actionSetsFragmentToAddSetFragment(setId)
+            val action = SetsFragmentDirections.actionSetsFragmentToStudyFragment(setId, selectedLanguageId)
             findNavController().navigate(action)
         }
         setsAdapter.onItemLongClickListener = { view, set, position ->

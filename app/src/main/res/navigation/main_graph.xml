@@ -83,6 +83,9 @@
         <action
             android:id="@+id/action_setsFragment_to_editSetFragment"
             app:destination="@id/editSetFragment" />
+        <action
+            android:id="@+id/action_setsFragment_to_studyFragment"
+            app:destination="@id/studyFragment" />
     </fragment>
     <fragment
         android:id="@+id/addSetFragment"
@@ -120,6 +123,9 @@
         <action
             android:id="@+id/action_editSetFragment_to_addWordFragment"
             app:destination="@id/addWordFragment" />
+        <action
+            android:id="@+id/action_editSetFragment_self"
+            app:destination="@id/editSetFragment" />
     </fragment>
     <fragment
         android:id="@+id/editWordFragment"
@@ -139,5 +145,59 @@
         <action
             android:id="@+id/action_editWordFragment_to_setsFragment"
             app:destination="@id/setsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/studyFragment"
+        android:name="com.example.verbo.study.StudyFragment"
+        android:label="StudyFragment" >
+        <action
+            android:id="@+id/action_studyFragment_to_setsFragment"
+            app:destination="@id/setsFragment" />
+        <argument
+            android:name="deckId"
+            app:argType="long"
+            android:defaultValue="0L" />
+        <argument
+            android:name="languageId"
+            app:argType="long"
+            android:defaultValue="0L" />
+        <action
+            android:id="@+id/action_studyFragment_to_openQuestionFragment"
+            app:destination="@id/openQuestionFragment" />
+        <action
+            android:id="@+id/action_studyFragment_to_closeQuestionFragment"
+            app:destination="@id/closeQuestionFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/closeQuestionFragment"
+        android:name="com.example.verbo.closequestion.CloseQuestionFragment"
+        android:label="CloseQuestionFragment" >
+        <argument
+            android:name="deckId"
+            app:argType="long"
+            android:defaultValue="0L" />
+        <argument
+            android:name="languageId"
+            app:argType="long"
+            android:defaultValue="0L" />
+        <action
+            android:id="@+id/action_closeQuestionFragment_to_studyFragment"
+            app:destination="@id/studyFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/openQuestionFragment"
+        android:name="com.example.verbo.openquestion.OpenQuestionFragment"
+        android:label="OpenQuestionFragment" >
+        <action
+            android:id="@+id/action_openQuestionFragment_to_studyFragment"
+            app:destination="@id/studyFragment" />
+        <argument
+            android:name="deckId"
+            app:argType="long"
+            android:defaultValue="0L" />
+        <argument
+            android:name="languageId"
+            app:argType="long"
+            android:defaultValue="0L" />
     </fragment>
 </navigation>
