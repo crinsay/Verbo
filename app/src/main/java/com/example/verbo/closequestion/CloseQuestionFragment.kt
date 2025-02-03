@@ -92,11 +92,9 @@ class CloseQuestionFragment : Fragment() {
     }
 
     private fun showTestResults() {
-        val score = viewModel.score.value ?: 0
-        val total = viewModel.currentQuestionIndex
         Toast.makeText(
             context,
-            "Test zakończony! Wynik: $score/$total",
+            "Koniec Nauki!",
             Toast.LENGTH_LONG
         ).show()
 

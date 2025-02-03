@@ -36,6 +36,10 @@ class TestQuestionViewModel @Inject constructor(
 
     private val questionDelay = 1000L
 
+    private val totalQuestions = 5
+    private lateinit var selectedFlashcards: List<FlashcardDto>
+    val whichQuestion = MutableLiveData<String>()
+
     fun setDeckId(deckId: Long) {
         Log.d("CloseQuestion", "Setting deckId: $deckId")
         currentDeckId = deckId
@@ -47,6 +51,7 @@ class TestQuestionViewModel @Inject constructor(
             flashcards = flashCardRepository.getFlashcardsByDeckId(currentDeckId)
             Log.d("CloseQuestion", "Loaded flashcards: ${flashcards.size}")
             if (flashcards.size >= 4) {
+                selectedFlashcards = flashcards.shuffled().take(totalQuestions)
                 showNextQuestion()
             }
         }
@@ -57,6 +62,8 @@ class TestQuestionViewModel @Inject constructor(
             isTestFinished.value = true
             return
         }
+
+        whichQuestion.value = "Pytanie ${currentQuestionIndex + 1} z $totalQuestions"
 
         val questionFlashcard = flashcards[currentQuestionIndex]
         val incorrectAnswers = flashcards.filter { it.flashcardId != questionFlashcard.flashcardId }
