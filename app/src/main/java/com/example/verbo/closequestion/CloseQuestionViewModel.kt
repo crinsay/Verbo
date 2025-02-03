@@ -1,5 +1,6 @@
 package com.example.verbo.closequestion
 
+import android.graphics.Color
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -34,6 +35,13 @@ class CloseQuestionViewModel @Inject constructor(
     val question = MutableLiveData<String>()
     val score = MutableLiveData(0)
     val isTestFinished = MutableLiveData(false)
+
+    val buttonColors = MutableLiveData<List<Int>>(List(4) { Color.parseColor("#e0da2f") })
+    private val defaultColor = Color.parseColor("#e0da2f")
+    private val correctColor = Color.parseColor("#4CAF50")
+    private val wrongColor = Color.parseColor("#F44336")
+
+    private val questionDelay = 1000L
 
     fun setDeckId(deckId: Long) {
         Log.d("CloseQuestion", "Setting deckId: $deckId")
@@ -74,10 +82,25 @@ class CloseQuestionViewModel @Inject constructor(
     }
 
     fun checkAnswer(selectedAnswerIndex: Int) {
-        if (selectedAnswerIndex == correctAnswerIndex) {
-            score.value = (score.value ?: 0) + 1
+        viewModelScope.launch {
+            val newColors = MutableList(4) { defaultColor }
+            newColors[correctAnswerIndex] = correctColor  // pokazujemy prawidłową odpowiedź
+
+            if (selectedAnswerIndex == correctAnswerIndex) {
+                score.value = (score.value ?: 0) + 1
+            } else {
+                newColors[selectedAnswerIndex] = wrongColor  // pokazujemy błędną odpowiedź
+            }
+
+            buttonColors.value = newColors
+
+            // Czekamy chwilę przed pokazaniem następnego pytania
+            delay(questionDelay)
+
+            // Resetujemy kolory i pokazujemy następne pytanie
+            currentQuestionIndex++
+            buttonColors.value = List(4) { defaultColor }
+            showNextQuestion()
         }
-        currentQuestionIndex++
-        showNextQuestion()
     }
 }
