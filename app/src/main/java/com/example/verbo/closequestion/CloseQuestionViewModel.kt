@@ -84,20 +84,20 @@ class CloseQuestionViewModel @Inject constructor(
     fun checkAnswer(selectedAnswerIndex: Int) {
         viewModelScope.launch {
             val newColors = MutableList(4) { defaultColor }
-            newColors[correctAnswerIndex] = correctColor  // pokazujemy prawidłową odpowiedź
+            newColors[correctAnswerIndex] = correctColor
 
             if (selectedAnswerIndex == correctAnswerIndex) {
                 score.value = (score.value ?: 0) + 1
             } else {
-                newColors[selectedAnswerIndex] = wrongColor  // pokazujemy błędną odpowiedź
+                newColors[selectedAnswerIndex] = wrongColor
             }
 
             buttonColors.value = newColors
 
-            // Czekamy chwilę przed pokazaniem następnego pytania
+
             delay(questionDelay)
 
-            // Resetujemy kolory i pokazujemy następne pytanie
+
             currentQuestionIndex++
             buttonColors.value = List(4) { defaultColor }
             showNextQuestion()
