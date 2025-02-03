@@ -58,7 +58,7 @@ class TestQuestionViewModel @Inject constructor(
     }
 
     private fun showNextQuestion() {
-        if (currentQuestionIndex >= flashcards.size) {
+        if (currentQuestionIndex >= totalQuestions) {
             isTestFinished.value = true
             return
         }
