@@ -36,7 +36,7 @@ class StudyFragment : Fragment() {
         }
         binding.openQuestionsButton.setOnClickListener {
             val action = StudyFragmentDirections.actionStudyFragmentToOpenQuestionFragment(
-                args.languageId, args.deckId
+                args.deckId
             )
             findNavController().navigate(action)
         }
