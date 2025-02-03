@@ -167,6 +167,9 @@
         <action
             android:id="@+id/action_studyFragment_to_closeQuestionFragment"
             app:destination="@id/closeQuestionFragment" />
+        <action
+            android:id="@+id/action_studyFragment_to_testQuestionFragment"
+            app:destination="@id/testQuestionFragment" />
     </fragment>
     <fragment
         android:id="@+id/closeQuestionFragment"
@@ -190,6 +193,22 @@
         android:label="OpenQuestionFragment" >
         <action
             android:id="@+id/action_openQuestionFragment_to_studyFragment"
+            app:destination="@id/studyFragment" />
+        <argument
+            android:name="deckId"
+            app:argType="long"
+            android:defaultValue="0L" />
+        <argument
+            android:name="languageId"
+            app:argType="long"
+            android:defaultValue="0L" />
+    </fragment>
+    <fragment
+        android:id="@+id/testQuestionFragment"
+        android:name="com.example.verbo.testquestion.TestQuestionFragment"
+        android:label="TestQuestionFragment" >
+        <action
+            android:id="@+id/action_testQuestionFragment_to_studyFragment"
             app:destination="@id/studyFragment" />
         <argument
             android:name="deckId"

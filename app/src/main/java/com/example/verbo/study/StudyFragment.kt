@@ -40,6 +40,12 @@ class StudyFragment : Fragment() {
             )
             findNavController().navigate(action)
         }
+        binding.timeQuestionsButton.setOnClickListener {
+            val action = StudyFragmentDirections.actionStudyFragmentToTestQuestionFragment(
+                args.deckId
+            )
+            findNavController().navigate(action)
+        }
 
         return binding.root
     }
