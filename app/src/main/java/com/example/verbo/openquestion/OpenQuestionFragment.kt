@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.verbo.R
+import com.example.verbo.closequestion.CloseQuestionFragmentDirections
 import com.example.verbo.databinding.FragmentOpenQuestionBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -49,7 +50,9 @@ class OpenQuestionFragment : Fragment() {
         }
 
         binding.Powrot.setOnClickListener {
-            findNavController().navigateUp()
+            val action = OpenQuestionFragmentDirections
+                .actionOpenQuestionFragmentToStudyFragment(args.deckId)
+            findNavController().navigate(action)
         }
     }
 
@@ -68,6 +71,8 @@ class OpenQuestionFragment : Fragment() {
             Toast.LENGTH_LONG
         ).show()
 
-        findNavController().navigateUp()
+        val action = OpenQuestionFragmentDirections
+            .actionOpenQuestionFragmentToStudyFragment(args.deckId)
+        findNavController().navigate(action)
     }
 }
