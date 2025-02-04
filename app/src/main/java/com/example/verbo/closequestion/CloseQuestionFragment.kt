@@ -85,7 +85,7 @@ class CloseQuestionFragment : Fragment() {
 
             cancelButton.setOnClickListener {
                 val action = CloseQuestionFragmentDirections
-                    .actionCloseQuestionFragmentToStudyFragment()
+                    .actionCloseQuestionFragmentToStudyFragment(args.deckId)
                 findNavController().navigate(action)
             }
         }
@@ -97,7 +97,9 @@ class CloseQuestionFragment : Fragment() {
             "Koniec Nauki!",
             Toast.LENGTH_LONG
         ).show()
+        val action = CloseQuestionFragmentDirections
+            .actionCloseQuestionFragmentToStudyFragment(args.deckId)
+        findNavController().navigate(action)
 
-        findNavController().navigateUp()
     }
 }
