@@ -86,7 +86,7 @@ class TestQuestionFragment : Fragment() {
 
             cancelButton.setOnClickListener {
                 val action = TestQuestionFragmentDirections
-                    .actionTestQuestionFragmentToStudyFragment()
+                    .actionTestQuestionFragmentToStudyFragment(args.deckId)
                 findNavController().navigate(action)
             }
         }
@@ -101,6 +101,8 @@ class TestQuestionFragment : Fragment() {
             Toast.LENGTH_LONG
         ).show()
 
-        findNavController().navigateUp()
+        val action = TestQuestionFragmentDirections
+            .actionTestQuestionFragmentToStudyFragment(args.deckId)
+        findNavController().navigate(action)
     }
 }
