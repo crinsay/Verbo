@@ -65,7 +65,7 @@ class TestQuestionViewModel @Inject constructor(
 
         whichQuestion.value = "Pytanie ${currentQuestionIndex + 1} z $totalQuestions"
 
-        val questionFlashcard = flashcards[currentQuestionIndex]
+        val questionFlashcard = selectedFlashcards[currentQuestionIndex]
         val incorrectAnswers = flashcards.filter { it.flashcardId != questionFlashcard.flashcardId }
             .shuffled()
             .take(3)
@@ -94,9 +94,7 @@ class TestQuestionViewModel @Inject constructor(
 
             buttonColors.value = newColors
 
-
             delay(questionDelay)
-
 
             currentQuestionIndex++
             buttonColors.value = List(4) { defaultColor }
