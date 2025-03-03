@@ -14,15 +14,15 @@ class DeckRepository @Inject constructor(
         val newDeck = newDeckDto.mapToDeck()
         newDeck.languageId = languageId
 
-        val newId = deckDao.insertDeck(newDeck)
-        return newId
+        val newDeckId = deckDao.insertDeck(newDeck)
+        return newDeckId
     }
 
     override suspend fun updateDeck(updatedDeckDto: DeckDto, languageId: Long) {
         val updatedDeck = updatedDeckDto.mapToDeck()
         updatedDeck.languageId = languageId
-        deckDao.updateDeck(updatedDeck)
 
+        deckDao.updateDeck(updatedDeck)
     }
 
     override suspend fun deleteDeck(deckToDeleteDto: DeckDto) {

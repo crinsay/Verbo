@@ -5,8 +5,8 @@
 
     <data>
         <variable
-            name="languageViewModel"
-            type="com.example.verbo.viewmodels.LanguageViewModel" />
+            name="wordViewModel"
+            type="com.example.verbo.viewmodels.AddFlashcardViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -16,21 +16,36 @@
 
 
         <EditText
-            android:id="@+id/editTextLanguage"
+            android:id="@+id/addWord"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
             android:layout_marginTop="150dp"
             android:backgroundTint="#e0da2f"
-            android:hint="@string/podaj_j_zyk"
+            android:hint="@string/podaj_s_wko"
             android:inputType="text"
             android:textColor="@android:color/white"
             android:textColorHint="@android:color/darker_gray"
             android:textSize="40sp"
-            android:text="@={languageViewModel.languageName}"
+            android:text="@={wordViewModel.question}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/addWordTranslate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="50dp"
+            android:backgroundTint="#e0da2f"
+            android:hint="@string/podaj_t_umaczenie"
+            android:inputType="text"
+            android:textColor="@android:color/white"
+            android:textColorHint="@android:color/darker_gray"
+            android:textSize="40sp"
+            android:text="@={wordViewModel.answer}"
+            app:layout_constraintTop_toBottomOf="@+id/addWord" />
 
         <LinearLayout
             android:id="@+id/linearLayout1"
@@ -43,22 +58,22 @@
             app:layout_constraintStart_toStartOf="parent">
 
             <Button
-                android:id="@+id/save_language_button"
+                android:id="@+id/next_word_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#e0da2f"
                 android:textColor="@color/black"
-                android:text="@string/zapisz"
+                android:text="@string/dalej"
                 android:textSize="40sp"
                 app:layout_constraintTop_toBottomOf="@+id/textView" />
 
             <Button
-                android:id="@+id/cancel_button"
+                android:id="@+id/exit_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#e0da2f"
                 android:textColor="@color/black"
-                android:text="@string/anuluj"
+                android:text="@string/zako_cz"
                 android:textSize="40sp"
                 app:layout_constraintTop_toBottomOf="@+id/textView" />
         </LinearLayout>

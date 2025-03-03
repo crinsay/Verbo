@@ -7,9 +7,9 @@
 
     <fragment
         android:id="@+id/menuFragment"
-        android:name="com.example.verbo.menu.MenuFragment"
+        android:name="com.example.verbo.views.fragments.MainMenuFragment"
         android:label="fragment_menu"
-        tools:layout="@layout/fragment_menu" >
+        tools:layout="@layout/fragment_main_menu" >
         <action
             android:id="@+id/action_menuFragment_to_languagesListFragment"
             app:destination="@id/languagesListFragment" />
@@ -20,7 +20,7 @@
 
     <fragment
         android:id="@+id/addWordFragment"
-        android:name="com.example.verbo.addword.AddWordFragment"
+        android:name="com.example.verbo.views.fragments.AddFlashcardFragment"
         android:label="AddWordFragment" >
         <action
             android:id="@+id/action_addWordFragment_to_setsFragment"
@@ -35,7 +35,7 @@
     </fragment>
     <fragment
         android:id="@+id/languagesListFragment"
-        android:name="com.example.verbo.languageslist.LanguagesListFragment"
+        android:name="com.example.verbo.views.fragments.LanguagesFragment"
         android:label="LanguagesListFragment" >
         <action
             android:id="@+id/action_languagesListFragment_to_menuFragment"
@@ -43,13 +43,10 @@
         <action
             android:id="@+id/action_languagesListFragment_to_addLanguageFragment"
             app:destination="@id/addLanguageFragment" />
-        <action
-            android:id="@+id/action_languagesListFragment_to_editLanguageFragment"
-            app:destination="@id/editLanguageFragment" />
     </fragment>
     <fragment
         android:id="@+id/addLanguageFragment"
-        android:name="com.example.verbo.addlanguage.AddLanguageFragment"
+        android:name="com.example.verbo.views.fragments.LanguageFragment"
         android:label="AddLanguageFragment" >
         <action
             android:id="@+id/action_addLanguageFragment_to_languagesListFragment"
@@ -60,19 +57,8 @@
             android:defaultValue="0L" />
     </fragment>
     <fragment
-        android:id="@+id/editLanguageFragment"
-        android:name="com.example.verbo.editlanguage.EditLanguageFragment"
-        android:label="EditLanguageFragment">
-        <argument
-            android:name="languageId"
-            app:argType="long" />
-        <action
-            android:id="@+id/actionEditLanguageFragmentToLanguagesListFragment"
-            app:destination="@id/languagesListFragment" />
-    </fragment>
-    <fragment
         android:id="@+id/setsFragment"
-        android:name="com.example.verbo.sets.SetsFragment"
+        android:name="com.example.verbo.views.fragments.DecksFragment"
         android:label="SetsFragment" >
         <action
             android:id="@+id/action_setsFragment_to_menuFragment"
@@ -89,7 +75,7 @@
     </fragment>
     <fragment
         android:id="@+id/addSetFragment"
-        android:name="com.example.verbo.addset.AddSetFragment"
+        android:name="com.example.verbo.views.fragments.AddDeckFragment"
         android:label="AddSetFragment" >
         <action
             android:id="@+id/action_addSetFragment_to_setsFragment"
@@ -104,7 +90,7 @@
     </fragment>
     <fragment
         android:id="@+id/editSetFragment"
-        android:name="com.example.verbo.editset.EditSetFragment"
+        android:name="com.example.verbo.views.fragments.EditDeckFragment"
         android:label="EditSetFragment" >
         <action
             android:id="@+id/action_editSetFragment_to_setsFragment"
@@ -129,7 +115,7 @@
     </fragment>
     <fragment
         android:id="@+id/editWordFragment"
-        android:name="com.example.verbo.editword.EditWordFragment"
+        android:name="com.example.verbo.views.fragments.EditFlashcardFragment"
         android:label="EditWordFragment" >
         <action
             android:id="@+id/action_editWordFragment_to_editSetFragment"
@@ -148,7 +134,7 @@
     </fragment>
     <fragment
         android:id="@+id/studyFragment"
-        android:name="com.example.verbo.study.StudyFragment"
+        android:name="com.example.verbo.views.fragments.StudyModeMenuFragment"
         android:label="StudyFragment" >
         <action
             android:id="@+id/action_studyFragment_to_setsFragment"
@@ -173,7 +159,7 @@
     </fragment>
     <fragment
         android:id="@+id/closeQuestionFragment"
-        android:name="com.example.verbo.closequestion.CloseQuestionFragment"
+        android:name="com.example.verbo.views.fragments.CloseQuestionStudyModeFragment"
         android:label="CloseQuestionFragment" >
         <argument
             android:name="deckId"
@@ -189,7 +175,7 @@
     </fragment>
     <fragment
         android:id="@+id/openQuestionFragment"
-        android:name="com.example.verbo.openquestion.OpenQuestionFragment"
+        android:name="com.example.verbo.views.fragments.OpenQuestionStudyModeFragment"
         android:label="OpenQuestionFragment" >
         <action
             android:id="@+id/action_openQuestionFragment_to_studyFragment"
@@ -205,7 +191,7 @@
     </fragment>
     <fragment
         android:id="@+id/testQuestionFragment"
-        android:name="com.example.verbo.testquestion.TestQuestionFragment"
+        android:name="com.example.verbo.views.fragments.TestYourselfStudyModeFragment"
         android:label="TestQuestionFragment" >
         <action
             android:id="@+id/action_testQuestionFragment_to_studyFragment"

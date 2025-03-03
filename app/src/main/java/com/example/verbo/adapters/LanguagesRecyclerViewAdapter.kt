@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.verbo.common.dtos.LanguageDto
-import com.example.verbo.databinding.FragmentLanguageBinding
+import com.example.verbo.databinding.RecyclerViewElementLanguageBinding
 
 class LanguagesRecyclerViewAdapter(private var items: MutableList<LanguageDto>)
     : RecyclerView.Adapter<LanguagesRecyclerViewAdapter.ViewHolder>(){
@@ -16,7 +16,7 @@ class LanguagesRecyclerViewAdapter(private var items: MutableList<LanguageDto>)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val binding = FragmentLanguageBinding.inflate(inflater, parent, false)
+        val binding = RecyclerViewElementLanguageBinding.inflate(inflater, parent, false)
 
         return ViewHolder(binding)
     }
@@ -30,7 +30,7 @@ class LanguagesRecyclerViewAdapter(private var items: MutableList<LanguageDto>)
         holder.bind(items[position])
     }
 
-    inner class ViewHolder(private val binding: FragmentLanguageBinding): RecyclerView.ViewHolder(binding.root) {
+    inner class ViewHolder(private val binding: RecyclerViewElementLanguageBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(item: LanguageDto) {
             binding.apply {
                 textViewLanguageName.text = item.name
