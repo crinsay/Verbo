@@ -15,8 +15,8 @@ import com.example.verbo.databinding.FragmentOpenQuestionStudyModeBinding
 import com.example.verbo.viewmodels.MainMenuViewModel
 
 class MainMenuFragment : Fragment() {
-    private lateinit var binding: FragmentMainMenuBinding
     private val viewModel: MainMenuViewModel by viewModels()
+    private lateinit var binding: FragmentMainMenuBinding
 
     companion object {
         fun newInstance() = MainMenuFragment()
@@ -33,7 +33,6 @@ class MainMenuFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentMainMenuBinding.inflate(inflater, container, false)
-        binding.lifecycleOwner = viewLifecycleOwner
 
         return binding.root
     }

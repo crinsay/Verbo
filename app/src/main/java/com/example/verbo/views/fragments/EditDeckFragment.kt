@@ -17,7 +17,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.verbo.R
-import com.example.verbo.adapters.WordsRecyclerViewAdapter
+import com.example.verbo.adapters.FlashcardsRecyclerViewAdapter
 import com.example.verbo.databinding.FragmentEditDeckBinding
 import com.example.verbo.viewmodels.EditDeckViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -29,7 +29,7 @@ class EditDeckFragment : Fragment() {
     private val args: EditDeckFragmentArgs by navArgs()
     private lateinit var binding: FragmentEditDeckBinding
     private val viewModel: EditDeckViewModel by viewModels()
-    private lateinit var wordAdapter: WordsRecyclerViewAdapter
+    private lateinit var wordAdapter: FlashcardsRecyclerViewAdapter
 
     companion object {
         fun newInstance() = EditDeckFragment()
@@ -49,7 +49,7 @@ class EditDeckFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        wordAdapter = WordsRecyclerViewAdapter(mutableListOf())
+        wordAdapter = FlashcardsRecyclerViewAdapter(mutableListOf())
 
         wordAdapter.onItemClickListener = { //pozniej przejscie do testu
         }

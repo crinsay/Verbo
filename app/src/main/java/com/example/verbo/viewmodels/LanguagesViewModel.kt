@@ -17,15 +17,15 @@ class LanguagesViewModel @Inject constructor(
     private val _languages = MutableStateFlow<MutableList<LanguageDto>>(mutableListOf())
     val languages: StateFlow<MutableList<LanguageDto>> = _languages
 
-    fun loadAllLanguages() {
+    fun getAllLanguages() {
         viewModelScope.launch {
             val languages = languageRepository.getAllLanguages()
             _languages.value = languages.toMutableList()
         }
     }
 
-    suspend fun deleteLanguage(LanguageToDelteDto: LanguageDto){
-        languageRepository.deleteLanguage(LanguageToDelteDto)
-        _languages.value.remove(LanguageToDelteDto)
+    suspend fun deleteLanguage(languageToDeleteDto: LanguageDto){
+        languageRepository.deleteLanguage(languageToDeleteDto)
+        _languages.value.remove(languageToDeleteDto)
     }
 }

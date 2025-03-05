@@ -55,11 +55,17 @@ class LanguageFragment : Fragment() {
                 }
             }
 
-           cancelButton.setOnClickListener {
-               val action = LanguageFragmentDirections.actionAddLanguageFragmentToLanguagesListFragment()
-               findNavController().navigate(action)
-           }
-        }
+            cancelButton.setOnClickListener {
+                val action = LanguageFragmentDirections.actionAddLanguageFragmentToLanguagesListFragment()
+                findNavController().navigate(action)
+            }
 
+            viewModel.isSaveLanguageButtonEnabled.observe(viewLifecycleOwner) { state ->
+                saveLanguageButton.apply {
+                    isEnabled = state
+                    alpha = if (state) 1.0F else 0.5F
+                }
+            }
+       }
     }
 }

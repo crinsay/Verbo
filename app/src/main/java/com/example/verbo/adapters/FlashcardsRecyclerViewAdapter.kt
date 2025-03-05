@@ -1,15 +1,13 @@
 package com.example.verbo.adapters
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.verbo.common.dtos.FlashcardDto
-import com.example.verbo.databinding.RecyclerViewElementDeckBinding
 import com.example.verbo.databinding.RecyclerViewElementFlashcardBinding
 
-class WordsRecyclerViewAdapter(private var items: MutableList<FlashcardDto>) : RecyclerView.Adapter<WordsRecyclerViewAdapter.ViewHolder>() {
+class FlashcardsRecyclerViewAdapter(private var items: MutableList<FlashcardDto>) : RecyclerView.Adapter<FlashcardsRecyclerViewAdapter.ViewHolder>() {
 
     var onItemClickListener: ((Long) -> Unit)? = null
     var onItemLongClickListener: ((View, FlashcardDto, Int) -> Unit)? = null

@@ -1,5 +1,6 @@
 package com.example.verbo.viewmodels
 
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -14,11 +15,18 @@ class LanguageViewModel @Inject constructor(
     private val languageRepository: ILanguageRepository
 ) : ViewModel() {
     val languageName = MutableLiveData<String>()
+    private var originalLanguageName: String? = null
+
+    val isSaveLanguageButtonEnabled = MediatorLiveData<Boolean>().apply {
+        addSource(languageName) { checkFields() }
+    }
 
     fun getLanguage(languageId: Long) {
         viewModelScope.launch {
             val language = languageRepository.getLanguageById(languageId)
+
             languageName.postValue(language.name)
+            originalLanguageName = language.name
         }
     }
 
@@ -34,5 +42,15 @@ class LanguageViewModel @Inject constructor(
         else {
             languageRepository.insertLanguage(languageDto)
         }
+    }
+
+    //Validate fields:
+    private fun checkFields() {
+        isSaveLanguageButtonEnabled.value = canSaveLanguage()
+    }
+
+    private fun canSaveLanguage(): Boolean {
+        return languageName.value?.trim()?.isNotEmpty() == true
+                && originalLanguageName != languageName.value!!.trim()
     }
 }

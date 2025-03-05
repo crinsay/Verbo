@@ -33,7 +33,7 @@ class LanguagesFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel.loadAllLanguages()
+        viewModel.getAllLanguages()
     }
 
     override fun onCreateView(
@@ -54,16 +54,16 @@ class LanguagesFragment : Fragment() {
 
             popupMenu.setOnMenuItemClickListener { menuItem ->
                 when (menuItem.itemId) {
+                    R.id.edit_option -> {
+                        val action = LanguagesFragmentDirections.actionLanguagesListFragmentToAddLanguageFragment(language.languageId) //0L by default.
+                        findNavController().navigate(action)
+                        true
+                    }
                     R.id.delete_option -> {
                         lifecycleScope.launch {
                             viewModel.deleteLanguage(language)
                             languagesAdapter.itemRemoved(position)
                         }
-                        true
-                    }
-                    R.id.edit_option -> {
-                        val action = LanguagesFragmentDirections.actionLanguagesListFragmentToAddLanguageFragment(language.languageId) //0L by default.
-                        findNavController().navigate(action)
                         true
                     }
                     else -> false
