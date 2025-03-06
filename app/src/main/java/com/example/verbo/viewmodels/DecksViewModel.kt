@@ -17,28 +17,27 @@ class DecksViewModel @Inject constructor(
     private val deckRepository: IDeckRepository,
     private val languageRepository: ILanguageRepository
 ): ViewModel() {
+    private val _languages = MutableStateFlow<List<LanguageDto>>(emptyList())
+    val languages: StateFlow<List<LanguageDto>> = _languages
+
     private val _decks = MutableStateFlow<MutableList<DeckDto>>(mutableListOf())
     val decks: StateFlow<MutableList<DeckDto>> = _decks
 
 
-    private val _languages = MutableStateFlow<List<LanguageDto>>(emptyList())
-    val languages: StateFlow<List<LanguageDto>> = _languages
-
-
-    init {
-        loadLanguages()
-    }
-    private fun loadLanguages() {
+    fun getAllLanguages() {
         viewModelScope.launch {
-            _languages.value = languageRepository.getAllLanguages()
+            val languages = languageRepository.getAllLanguages()
+            _languages.value = languages
         }
     }
-    fun loadDecksByLanguageId(languageId: Long) {
+
+    fun getDecksByLanguageId(languageId: Long) {
         viewModelScope.launch {
             val decks = deckRepository.getDecksByLanguageId(languageId)
             _decks.value = decks.toMutableList()
         }
     }
+
     fun refreshDecks(languageId: Long) {
         viewModelScope.launch {
             val decks = if (languageId != -1L) {
@@ -50,16 +49,8 @@ class DecksViewModel @Inject constructor(
         }
     }
 
-    suspend fun deleteDeck(DeckToDelteDto: DeckDto){
-        deckRepository.deleteDeck(DeckToDelteDto)
-        _decks.value.remove(DeckToDelteDto)
+    suspend fun deleteDeck(deckToDeleteDto: DeckDto){
+        deckRepository.deleteDeck(deckToDeleteDto)
+        _decks.value.remove(deckToDeleteDto)
     }
-    /*
-    suspend fun editDeck(DeckToEditDto: DeckDto, languageId: Long) {
-        deckRepository.updateDeck(DeckToEditDto, languageId)
-        //Moze trzeba tutaj wiecej, nie wiem jeszcze
-    }
-
-     */
-
 }

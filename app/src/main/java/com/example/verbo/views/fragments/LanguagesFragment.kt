@@ -14,7 +14,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.verbo.R
-import com.example.verbo.adapters.LanguagesRecyclerViewAdapter
+import com.example.verbo.adapters.recyclerview.LanguagesRecyclerViewAdapter
 import com.example.verbo.databinding.FragmentLanguagesBinding
 import com.example.verbo.viewmodels.LanguagesViewModel
 import dagger.hilt.android.AndroidEntryPoint

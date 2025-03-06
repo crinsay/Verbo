@@ -17,7 +17,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.verbo.R
-import com.example.verbo.adapters.FlashcardsRecyclerViewAdapter
+import com.example.verbo.adapters.recyclerview.FlashcardsRecyclerViewAdapter
 import com.example.verbo.databinding.FragmentEditDeckBinding
 import com.example.verbo.viewmodels.EditDeckViewModel
 import dagger.hilt.android.AndroidEntryPoint

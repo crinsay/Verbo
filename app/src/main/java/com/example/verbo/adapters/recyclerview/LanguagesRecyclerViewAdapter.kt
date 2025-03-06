@@ -1,23 +1,22 @@
-package com.example.verbo.adapters
+package com.example.verbo.adapters.recyclerview
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.verbo.common.dtos.DeckDto
-import com.example.verbo.databinding.RecyclerViewElementDeckBinding
+import com.example.verbo.common.dtos.LanguageDto
+import com.example.verbo.databinding.RecyclerViewElementLanguageBinding
 
+class LanguagesRecyclerViewAdapter(private var items: MutableList<LanguageDto>)
+    : RecyclerView.Adapter<LanguagesRecyclerViewAdapter.ViewHolder>(){
 
-class DecksRecyclerViewAdapter (private var items: MutableList<DeckDto>) : RecyclerView.Adapter<DecksRecyclerViewAdapter.ViewHolder>()
-{
     var onItemClickListener: ((Long) -> Unit)? = null
-    var onItemLongClickListener: ((View, DeckDto, Int) -> Unit)? = null
+    var onItemLongClickListener: ((View, LanguageDto, Int) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-
-        val binding = RecyclerViewElementDeckBinding.inflate(inflater, parent, false)
+        val binding = RecyclerViewElementLanguageBinding.inflate(inflater, parent, false)
 
         return ViewHolder(binding)
     }
@@ -31,14 +30,14 @@ class DecksRecyclerViewAdapter (private var items: MutableList<DeckDto>) : Recyc
         holder.bind(items[position])
     }
 
-    inner class ViewHolder(private val binding: RecyclerViewElementDeckBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: DeckDto){
+    inner class ViewHolder(private val binding: RecyclerViewElementLanguageBinding): RecyclerView.ViewHolder(binding.root) {
+        fun bind(item: LanguageDto) {
             binding.apply {
-                textViewSetName.text = item.name
+                textViewLanguageName.text = item.name
             }
 
             itemView.setOnClickListener {
-                onItemClickListener?.invoke(item.deckId)
+                onItemClickListener?.invoke(item.languageId)
             }
 
             itemView.setOnLongClickListener {
@@ -47,10 +46,10 @@ class DecksRecyclerViewAdapter (private var items: MutableList<DeckDto>) : Recyc
             }
         }
     }
+
     @SuppressLint("NotifyDataSetChanged")
-    fun fillWithData(newItems: MutableList<DeckDto>) {
+    fun fillWithData(newItems: MutableList<LanguageDto>) {
         items = newItems
         notifyDataSetChanged()
     }
-
 }

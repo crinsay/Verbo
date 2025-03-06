@@ -1,4 +1,4 @@
-package com.example.verbo.adapters
+package com.example.verbo.adapters.recyclerview
 
 import android.view.LayoutInflater
 import android.view.View
