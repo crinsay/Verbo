@@ -45,12 +45,18 @@ class EditFlashcardFragment : Fragment() {
 
         binding.Zapisz.setOnClickListener {
             viewModel.updateFlashcard(args.flashcardId)
-            val action = EditFlashcardFragmentDirections.actionEditWordFragmentToEditSetFragment(args.deckId)
+            val action = EditFlashcardFragmentDirections.actionEditWordFragmentToEditSetFragment(
+                deckId = args.deckId,
+                languageId = args.languageId
+            )
             findNavController().navigate(action)
         }
 
         binding.Anuluj.setOnClickListener{
-            val action = EditFlashcardFragmentDirections.actionEditWordFragmentToEditSetFragment(args.deckId)
+            val action = EditFlashcardFragmentDirections.actionEditWordFragmentToEditSetFragment(
+                deckId = args.deckId,
+                languageId = args.languageId
+            )
             findNavController().navigate(action)
         }
     }

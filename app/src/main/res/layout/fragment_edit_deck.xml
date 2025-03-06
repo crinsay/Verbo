@@ -32,24 +32,26 @@
 
             <!-- Language Name -->
             <EditText
-                android:id="@+id/textViewSetName"
+                android:id="@+id/deck_name_text_view"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="Nazwa zestawu"
+                android:hint="Deck name"
                 android:text="@={editSetViewModel.deckName}"
                 android:textColorHint="@android:color/darker_gray"
                 android:textSize="25sp"
                 android:inputType="text"
+                android:enabled="false"
+                android:alpha="0.75"
                 android:textColor="@android:color/white" />
 
             <Button
-                android:id="@+id/save_name_button"
+                android:id="@+id/edit_or_save_deck_name_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#e0da2f"
                 android:textColor="@color/black"
-                android:text="@string/zapisz" />
+                android:text="@string/edit" />
         </LinearLayout>
 
 

@@ -1,8 +1,8 @@
 package com.example.verbo.views.fragments
 
+import android.annotation.SuppressLint
 import androidx.fragment.app.viewModels
 import android.os.Bundle
-import android.util.Log
 import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -29,7 +29,7 @@ class EditDeckFragment : Fragment() {
     private val args: EditDeckFragmentArgs by navArgs()
     private lateinit var binding: FragmentEditDeckBinding
     private val viewModel: EditDeckViewModel by viewModels()
-    private lateinit var wordAdapter: FlashcardsRecyclerViewAdapter
+    private lateinit var flashcardsAdapter: FlashcardsRecyclerViewAdapter
 
     companion object {
         fun newInstance() = EditDeckFragment()
@@ -37,45 +37,38 @@ class EditDeckFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d("EditSetFragment", "Otrzymane argumenty: deckId=${args.deckId}, languageId=${args.languageId}")
 
-        viewModel.setDeckId(args.deckId)
-        viewModel.setLanguageId(args.languageId)
-        viewModel.loadDeckData()
+        viewModel.getDeckById(args.deckId)
+        viewModel.getFlashcardsByDeckId(args.deckId)
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
-        wordAdapter = FlashcardsRecyclerViewAdapter(mutableListOf())
-
-        wordAdapter.onItemClickListener = { //pozniej przejscie do testu
-        }
-
-        wordAdapter.onItemLongClickListener = { view, word, position ->
+        flashcardsAdapter = FlashcardsRecyclerViewAdapter.create()
+        flashcardsAdapter.onItemLongClickListener = { view, flashcard, position ->
             val popupMenu = PopupMenu(requireContext(), view)
 
             popupMenu.menuInflater
                 .inflate(R.menu.menu_remove_flashcard, popupMenu.menu)
             popupMenu.gravity = Gravity.END
 
-
             popupMenu.setOnMenuItemClickListener { menuItem ->
                 when (menuItem.itemId) {
                     R.id.delete_option -> {
                         lifecycleScope.launch {
-                            viewModel.deleteWord(word)
-                            if (position >= 0) {
-                                wordAdapter.itemRemoved(position)
-                            }
+                            viewModel.deleteFlashcard(flashcard)
+                            flashcardsAdapter.itemRemoved(position)
                         }
                         true
                     }
                     R.id.edit_option -> {
-                        val flashcardId = word.flashcardId
-                        val action = EditDeckFragmentDirections.actionEditSetFragmentToEditWordFragment(flashcardId, args.deckId)
+                        val action = EditDeckFragmentDirections.actionEditSetFragmentToEditWordFragment(
+                            flashcardId = flashcard.flashcardId,
+                            deckId =  args.deckId,
+                            languageId = args.languageId
+                        )
                         findNavController().navigate(action)
                         true
                     }
@@ -83,57 +76,81 @@ class EditDeckFragment : Fragment() {
                 }
 
             }
+
             popupMenu.show()
-
-        }
-        lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.deckName.observe(viewLifecycleOwner) { name ->
-                    binding.textViewSetName.setText(name)
-                }
-            }
         }
 
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.flashes.collect {
-                    wordAdapter.fillWithData(it.toMutableList())
+                viewModel.flashcards.collect {
+                    flashcardsAdapter.fillWithData(it.toMutableList())
                 }
             }
         }
 
         binding = FragmentEditDeckBinding.inflate(inflater, container, false)
         binding.apply {
+            editSetViewModel = viewModel
+            lifecycleOwner = viewLifecycleOwner
             recyclerViewWords.apply {
                 layoutManager = LinearLayoutManager(requireContext())
-                adapter = wordAdapter
+                adapter = flashcardsAdapter
             }
         }
-        /* Moze potrzebne nie wiem
-        binding.editSetViewModel = viewModel
-        binding.lifecycleOwner = viewLifecycleOwner
-         */
+
         return binding.root
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.apply {
-            saveNameButton.setOnClickListener {
-                val newDeckName = binding.textViewSetName.text.toString().trim()
-                viewModel.updateDeckName(newDeckName)
-                Toast.makeText(requireContext(), "Zapisano zmiany", Toast.LENGTH_SHORT).show()
+            editOrSaveDeckNameButton.setOnClickListener {
+                if (viewModel.deckNameMode == EditDeckViewModel.DeckNameMode.IDLE) {
+                    editOrSaveDeckNameButton.isEnabled = false
+                    editOrSaveDeckNameButton.alpha = 0.5F
+                    deckNameTextView.isEnabled = true
+                    deckNameTextView.alpha = 1.0F
+
+                    viewModel.deckNameMode = EditDeckViewModel.DeckNameMode.EDIT
+                }
+                else {
+                    deckNameTextView.isEnabled = false
+                    deckNameTextView.alpha = 0.75F
+                    lifecycleScope.launch {
+                        viewModel.saveDeck(args.deckId, args.languageId)
+                        Toast.makeText(requireContext(), "Saved changes", Toast.LENGTH_SHORT).show()
+                    }
+
+                    viewModel.deckNameMode = EditDeckViewModel.DeckNameMode.IDLE
+                }
+
+                editOrSaveDeckNameButton.text = viewModel.deckNameMode.relatedText
             }
+
             addWordButton.setOnClickListener{
                 lifecycleScope.launch {
-                    val action = EditDeckFragmentDirections.actionEditSetFragmentToAddWordFragment(args.deckId)
+                    val action = EditDeckFragmentDirections.actionEditSetFragmentToAddWordFragment(
+                        deckId = args.deckId,
+                        languageId = args.languageId
+                    )
                     findNavController().navigate(action)
                 }
             }
+
             Powrot.setOnClickListener {
                 val action = EditDeckFragmentDirections.actionEditSetFragmentToSetsFragment(args.languageId)
                 findNavController().navigate(action)
+            }
+
+            viewModel.isSaveDeckButtonEnabled.observe(viewLifecycleOwner) { state ->
+                if (viewModel.deckNameMode == EditDeckViewModel.DeckNameMode.EDIT) {
+                    editOrSaveDeckNameButton.apply {
+                        isEnabled = state
+                        alpha = if (state) 1.0F else 0.5F
+                    }
+                }
             }
         }
     }

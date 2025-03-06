@@ -1,5 +1,6 @@
 package com.example.verbo.adapters.recyclerview
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,12 +10,19 @@ import com.example.verbo.databinding.RecyclerViewElementFlashcardBinding
 
 class FlashcardsRecyclerViewAdapter(private var items: MutableList<FlashcardDto>) : RecyclerView.Adapter<FlashcardsRecyclerViewAdapter.ViewHolder>() {
 
-    var onItemClickListener: ((Long) -> Unit)? = null
     var onItemLongClickListener: ((View, FlashcardDto, Int) -> Unit)? = null
+
+    companion object {
+        fun create(): FlashcardsRecyclerViewAdapter {
+            val adapter = FlashcardsRecyclerViewAdapter(mutableListOf())
+            return adapter
+        }
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = RecyclerViewElementFlashcardBinding.inflate(inflater, parent, false)
+
         return ViewHolder(binding)
     }
 
@@ -29,6 +37,7 @@ class FlashcardsRecyclerViewAdapter(private var items: MutableList<FlashcardDto>
         notifyItemRemoved(position)
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun fillWithData(newItems: MutableList<FlashcardDto>) {
         items = newItems
         notifyDataSetChanged()
@@ -39,10 +48,6 @@ class FlashcardsRecyclerViewAdapter(private var items: MutableList<FlashcardDto>
             binding.apply {
                 textViewWord.text = item.wordDefinition
                 textViewTranslate.text = item.wordTranslation
-            }
-
-            itemView.setOnClickListener {
-                onItemClickListener?.invoke(item.flashcardId)
             }
 
             itemView.setOnLongClickListener {

@@ -1,6 +1,7 @@
 package com.example.verbo.viewmodels
 
 import android.util.Log
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -16,83 +17,67 @@ import javax.inject.Inject
 
 @HiltViewModel
 class EditDeckViewModel @Inject constructor(
-    private val flashCardRepository: IFlashcardRepository,
+    private val flashcardRepository: IFlashcardRepository,
     private val deckRepository: IDeckRepository
 ) : ViewModel() {
     val deckName = MutableLiveData<String>()
-    private var currentDeckId: Long = -1L
-    private var currentLanguageId: Long = -1L
-    //var deckId = 0L
-    //Podobno lepsze emptyList od MutableListof()
-    private val _flashes = MutableStateFlow<List<FlashcardDto>>(emptyList())
-    val flashes: StateFlow<List<FlashcardDto>> = _flashes
+    private var originalDeckName: String? = null
 
-    //Ustawianie Id decku oraz Language pod deck
-    fun setDeckId(deckId: Long) {
-        Log.d("EditSetViewModel", "Otrzymano deckId: $deckId")
-        currentDeckId = deckId
+    private val _flashcards = MutableStateFlow<MutableList<FlashcardDto>>(mutableListOf())
+    val flashcards: StateFlow<MutableList<FlashcardDto>> = _flashcards
+
+    enum class DeckNameMode(val relatedText: String) {
+        IDLE("Edit"),
+        EDIT("Save")
     }
-    fun setLanguageId(languageId: Long) {
-        Log.d("AddWordFragment", "Otrzymano languageId: ${languageId}")
-        currentLanguageId = languageId
+    var deckNameMode = DeckNameMode.IDLE
+
+    val isSaveDeckButtonEnabled = MediatorLiveData<Boolean>().apply {
+        addSource(deckName) { checkFields() }
     }
 
-    //Ładowanie Decku oraz Ładowanie Nazwy
-    fun loadDeckData() {
+
+    fun getDeckById(deckId: Long) {
         viewModelScope.launch {
-            try {
-                val deck = deckRepository.getDeckById(currentDeckId)
-                deckName.postValue(deck.name)
-                Log.e("EditSetViewModel", "Loaded deck name: ${deck.name}")
-                val flashcards = flashCardRepository.getFlashcardsByDeckId(currentDeckId)
-                _flashes.value = flashcards
-            } catch (e: Exception) {
-                Log.e("EditSetViewModel", "Error loading deck data", e)
-            }
+            val deck = deckRepository.getDeckById(deckId)
+
+            deckName.postValue(deck.name)
+            originalDeckName = deck.name
         }
     }
 
-    //CRUD
-    /*
-    suspend fun deleteWord(wordToDelteDto: FlashcardDto){
-        flashCardRepository.deleteFlashcard(wordToDelteDto)
-        _flashes.value = _flashes.value.filter {
-            it.flashcardId != wordToDelteDto.flashcardId
-        }
+    suspend fun saveDeck(deckId: Long, languageId: Long) {
+        val deckDto = DeckDto(
+            deckId = deckId,
+            name = deckName.value!!.trim()
+        )
+        deckName.value = deckDto.name //To remove whitespaces in EditText as well because we are staying in current fragment after saveDeck.
+        originalDeckName = deckDto.name
+
+        deckRepository.updateDeck(deckDto, languageId)
     }
 
-     */
-    suspend fun deleteWord(wordToDelteDto: FlashcardDto){
-        flashCardRepository.deleteFlashcard(wordToDelteDto)
-        //_flashes.value.remove(wordToDelteDto) Nie działa value remove jakos
-    }
-
-    fun updateDeckName(newName: String) {
-        Log.d("EditSetViewModel", "updateDeckName called with: $newName")
+    fun getFlashcardsByDeckId(deckId: Long) {
         viewModelScope.launch {
-            saveDeckNameToDatabase(newName)
+            val flashcards = flashcardRepository.getFlashcardsByDeckId(deckId)
+
+            _flashcards.value = flashcards.toMutableList()
         }
     }
-    private suspend fun saveDeckNameToDatabase(newName: String) {
-        val deckDto = DeckDto(
-            deckId = currentDeckId,
-            name = newName
-        )
-        Log.d("EditSetViewModel", "Saving to DB: ${deckDto.name}")
 
-        deckRepository.updateDeck(deckDto, currentLanguageId)
+    suspend fun deleteFlashcard(flashcardToDeleteDto: FlashcardDto){
+        flashcardRepository.deleteFlashcard(flashcardToDeleteDto)
+
+        _flashcards.value.remove(flashcardToDeleteDto)
     }
-    /*
-    suspend fun updateDeck() {
-        val deckNameValue = deckName.value!!.trim()
 
-        val deckDto = DeckDto(
-            deckId = currentDeckId,
-            name = deckNameValue
-        )
-        deckRepository.updateDeck(deckDto, currentLanguageId)
-
+    //Validation:
+    private fun checkFields() {
+        isSaveDeckButtonEnabled.value = canSaveDeck()
     }
-    */
 
+    private fun canSaveDeck(): Boolean {
+        return deckName.value?.isNotBlank() == true
+                && deckName.value!!.trim() != originalDeckName
+    }
 }

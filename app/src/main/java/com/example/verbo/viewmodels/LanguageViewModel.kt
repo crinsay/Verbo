@@ -50,7 +50,7 @@ class LanguageViewModel @Inject constructor(
     }
 
     private fun canSaveLanguage(): Boolean {
-        return languageName.value?.trim()?.isNotEmpty() == true
-                && originalLanguageName != languageName.value!!.trim()
+        return languageName.value?.isNotBlank() == true
+                && languageName.value!!.trim() != originalLanguageName
     }
 }
