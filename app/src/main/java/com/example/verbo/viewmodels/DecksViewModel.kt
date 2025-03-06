@@ -23,6 +23,8 @@ class DecksViewModel @Inject constructor(
     private val _decks = MutableStateFlow<MutableList<DeckDto>>(mutableListOf())
     val decks: StateFlow<MutableList<DeckDto>> = _decks
 
+    var selectedLanguageId: Long = 0L
+
 
     fun getAllLanguages() {
         viewModelScope.launch {
@@ -31,20 +33,9 @@ class DecksViewModel @Inject constructor(
         }
     }
 
-    fun getDecksByLanguageId(languageId: Long) {
+    fun getDecksByLanguageId() {
         viewModelScope.launch {
-            val decks = deckRepository.getDecksByLanguageId(languageId)
-            _decks.value = decks.toMutableList()
-        }
-    }
-
-    fun refreshDecks(languageId: Long) {
-        viewModelScope.launch {
-            val decks = if (languageId != -1L) {
-                deckRepository.getDecksByLanguageId(languageId)
-            } else {
-                deckRepository.getDecksByLanguageId(languageId)
-            }
+            val decks = deckRepository.getDecksByLanguageId(selectedLanguageId)
             _decks.value = decks.toMutableList()
         }
     }

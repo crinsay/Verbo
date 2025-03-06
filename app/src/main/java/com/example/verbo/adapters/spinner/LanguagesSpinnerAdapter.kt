@@ -16,6 +16,9 @@ class LanguagesSpinnerAdapter(context: Context, resource: Int, objects: List<Str
     companion object {
         fun create(context: Context, resource: Int, languages: List<LanguageDto>): LanguagesSpinnerAdapter {
             val adapter = LanguagesSpinnerAdapter(context, resource, languages.map { it.name })
+                .also { adapter ->
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                }
             adapter.setOnSelectedItemListener(languages)
 
             return adapter
@@ -24,12 +27,17 @@ class LanguagesSpinnerAdapter(context: Context, resource: Int, objects: List<Str
 
     private fun setOnSelectedItemListener(languages: List<LanguageDto>) {
         onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
                 onItemClickListener?.invoke(languages[position].languageId)
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
-
+                //Nothing to implement.
             }
         }
     }

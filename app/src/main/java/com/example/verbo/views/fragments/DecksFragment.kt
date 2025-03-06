@@ -19,6 +19,7 @@ import kotlinx.coroutines.launch
 import android.widget.ArrayAdapter
 import android.widget.AdapterView
 import android.widget.PopupMenu
+import androidx.navigation.fragment.navArgs
 import com.example.verbo.adapters.spinner.LanguagesSpinnerAdapter
 import com.example.verbo.databinding.FragmentDecksBinding
 import com.example.verbo.viewmodels.DecksViewModel
@@ -26,48 +27,59 @@ import com.example.verbo.viewmodels.DecksViewModel
 @AndroidEntryPoint
 class DecksFragment : Fragment() {
     private lateinit var binding: FragmentDecksBinding
+    private val args: DecksFragmentArgs by navArgs()
     private lateinit var languagesAdapter: LanguagesSpinnerAdapter
     private lateinit var decksAdapter: DecksRecyclerViewAdapter
     private val viewModel: DecksViewModel by viewModels()
-    private var selectedLanguageId: Long = -1 //do usuniecia/zmiany
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         viewModel.getAllLanguages()
+
+        if (args.selectedLanguageId != 0L) {
+            viewModel.selectedLanguageId = args.selectedLanguageId
+            viewModel.getDecksByLanguageId() //We are getting languageId directly from ViewModel, so we don't need to pass it.
+        }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentDecksBinding.inflate(inflater, container, false)
-
         //Setup languages spinner:
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.languages.collect { languages ->
-                    languagesAdapter = LanguagesSpinnerAdapter.create(
-                        requireContext(),
-                        android.R.layout.simple_spinner_item,
-                        languages
-                    )
-                    languagesAdapter.onItemClickListener = { languageId ->
-                        viewModel.getDecksByLanguageId(languageId)
-                    }
+                    if (languages.isNotEmpty()) {
+                        languagesAdapter = LanguagesSpinnerAdapter.create(
+                            requireContext(),
+                            android.R.layout.simple_spinner_item,
+                            languages
+                        )
+                        languagesAdapter.onItemClickListener = { languageId ->
+                            viewModel.selectedLanguageId = languageId
+                            viewModel.getDecksByLanguageId() //We are getting languageId directly from ViewModel, so we don't need to pass it.
+                        }
 
-                    binding.spinnerLanguages.apply {
-                        adapter = languagesAdapter
-                        onItemSelectedListener = languagesAdapter.onItemSelectedListener
+                        binding.spinnerLanguages.apply {
+                            adapter = languagesAdapter
+                            onItemSelectedListener = languagesAdapter.onItemSelectedListener
+
+                            val index = languages.indexOfFirst { it.languageId == viewModel.selectedLanguageId }
+                            if (index != -1) {
+                                setSelection(index)
+                            }
+                        }
                     }
                 }
             }
         }
 
-        //Setup decks recycler view:
+        //Setup decks recycler view and binding:
         decksAdapter = DecksRecyclerViewAdapter(mutableListOf())
         decksAdapter.onItemClickListener = { deckId ->
-            val action = DecksFragmentDirections.actionSetsFragmentToStudyFragment(deckId, selectedLanguageId)
+            val action = DecksFragmentDirections.actionSetsFragmentToStudyFragment(deckId, viewModel.selectedLanguageId)
             findNavController().navigate(action)
         }
         decksAdapter.onItemLongClickListener = { view, deck, position ->
@@ -80,7 +92,10 @@ class DecksFragment : Fragment() {
             popupMenu.setOnMenuItemClickListener { menuItem ->
                 when (menuItem.itemId) {
                     R.id.edit_option -> {
-                        val action = DecksFragmentDirections.actionSetsFragmentToEditSetFragment(deck.deckId, selectedLanguageId)
+                        val action = DecksFragmentDirections.actionSetsFragmentToEditSetFragment(
+                            deckId = deck.deckId,
+                            languageId = viewModel.selectedLanguageId
+                        )
                         findNavController().navigate(action)
                         true
                     }
@@ -98,11 +113,6 @@ class DecksFragment : Fragment() {
             popupMenu.show()
         }
 
-        binding.recyclerViewSets.apply {
-            layoutManager = LinearLayoutManager(requireContext())
-            adapter = decksAdapter
-        }
-
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.decks.collect {
@@ -111,12 +121,13 @@ class DecksFragment : Fragment() {
             }
         }
 
-        return binding.root
-    }
+        binding = FragmentDecksBinding.inflate(inflater, container, false)
+        binding.recyclerViewSets.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = decksAdapter
+        }
 
-    override fun onResume() {
-        super.onResume()
-        viewModel.refreshDecks(selectedLanguageId)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -128,7 +139,7 @@ class DecksFragment : Fragment() {
             }
 
             addSetButton.setOnClickListener {
-                val action = DecksFragmentDirections.actionSetsFragmentToAddSetFragment(selectedLanguageId)
+                val action = DecksFragmentDirections.actionSetsFragmentToAddSetFragment(viewModel.selectedLanguageId)
                 findNavController().navigate(action)
             }
         }

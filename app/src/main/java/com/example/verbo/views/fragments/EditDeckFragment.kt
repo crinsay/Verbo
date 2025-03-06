@@ -93,6 +93,7 @@ class EditDeckFragment : Fragment() {
                 }
             }
         }
+
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.flashes.collect {
@@ -131,7 +132,7 @@ class EditDeckFragment : Fragment() {
                 }
             }
             Powrot.setOnClickListener {
-                val action = EditDeckFragmentDirections.actionEditSetFragmentToSetsFragment()
+                val action = EditDeckFragmentDirections.actionEditSetFragmentToSetsFragment(args.languageId)
                 findNavController().navigate(action)
             }
         }

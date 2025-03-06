@@ -16,7 +16,6 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class AddFlashcardFragment : Fragment() {
-
     private val args: AddFlashcardFragmentArgs by navArgs()
     private lateinit var binding: FragmentAddFlashcardBinding
     private val viewModel: AddFlashcardViewModel by viewModels()
@@ -58,7 +57,7 @@ class AddFlashcardFragment : Fragment() {
         }
 
         binding.exitButton.setOnClickListener {
-            val action = AddFlashcardFragmentDirections.actionAddWordFragmentToSetsFragment()
+            val action = AddFlashcardFragmentDirections.actionAddWordFragmentToSetsFragment(args.languageId)
             findNavController().navigate(action)
         }
     }

@@ -45,7 +45,7 @@ class MainMenuFragment : Fragment() {
             }
 
             Zestawy.setOnClickListener {
-                val action = MainMenuFragmentDirections.actionMenuFragmentToSetsFragment()
+                val action = MainMenuFragmentDirections.actionMenuFragmentToSetsFragment(0L)
                 findNavController().navigate(action)
             }
         }

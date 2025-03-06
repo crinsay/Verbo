@@ -30,7 +30,6 @@ class AddDeckFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         viewModel.setLanguageId(args.languageId)
-
     }
 
     override fun onCreateView(
@@ -58,7 +57,7 @@ class AddDeckFragment : Fragment() {
                     } else {
                         lifecycleScope.launch { //BO NIE NADAZA
                             viewModel.saveDeck()
-                            val action = AddDeckFragmentDirections.actionAddSetFragmentToAddWordFragment(viewModel.deckId)
+                            val action = AddDeckFragmentDirections.actionAddSetFragmentToAddWordFragment(viewModel.deckId, args.languageId)
                             findNavController().navigate(action)
                         }
 
