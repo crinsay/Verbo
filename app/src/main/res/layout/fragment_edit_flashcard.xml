@@ -28,7 +28,7 @@
             android:textColor="@android:color/white"
             android:textColorHint="@android:color/darker_gray"
             android:textSize="40sp"
-            android:text="@={editWordViewModel.question}"
+            android:text="@={editWordViewModel.wordDefinition}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -44,7 +44,7 @@
             android:textColor="@android:color/white"
             android:textColorHint="@android:color/darker_gray"
             android:textSize="40sp"
-            android:text="@={editWordViewModel.answer}"
+            android:text="@={editWordViewModel.wordTranslation}"
             app:layout_constraintTop_toBottomOf="@+id/editWord" />
 
         <LinearLayout
@@ -64,6 +64,8 @@
                 android:backgroundTint="#e0da2f"
                 android:textColor="@color/black"
                 android:text="@string/zapisz"
+                android:enabled="false"
+                android:alpha="0.5"
                 android:textSize="40sp"
                 app:layout_constraintTop_toBottomOf="@+id/textView" />
 

@@ -1,6 +1,7 @@
 package com.example.verbo.viewmodels
 
 import android.util.Log
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -14,37 +15,46 @@ import javax.inject.Inject
 class EditFlashcardViewModel @Inject constructor(
     private val flashcardRepository: IFlashcardRepository
 ): ViewModel() {
-    private var currentDeckId: Long = -1L
-    val question = MutableLiveData<String>()
-    val answer = MutableLiveData<String>()
+    val wordDefinition = MutableLiveData<String>()
+    val wordTranslation = MutableLiveData<String>()
+    private var originalWordDefinition: String? = null
+    private var originalWordTranslation: String? = null
 
-    fun setDeckId(deckId: Long) {
-        Log.d("EditWordViewModel", "Otrzymano deckId: $deckId")
-        currentDeckId = deckId
+    val isSaveFlashcardButtonEnabled = MediatorLiveData<Boolean>().apply {
+        addSource(wordDefinition) { checkFields() }
+        addSource(wordTranslation) { checkFields() }
     }
 
-    fun loadFlashcard(flashcardId: Long) {
+    fun getFlashcardById(flashcardId: Long) {
         viewModelScope.launch {
             val flashcard = flashcardRepository.getFlashcardById(flashcardId)
 
-            question.postValue(flashcard.wordDefinition)
-            answer.postValue(flashcard.wordTranslation)
+            wordDefinition.postValue(flashcard.wordDefinition)
+            wordTranslation.postValue(flashcard.wordTranslation)
+            originalWordDefinition = flashcard.wordDefinition
+            originalWordTranslation = flashcard.wordTranslation
         }
     }
 
-    fun updateFlashcard(flashcardId: Long) {
-        val questionValue = question.value ?: ""
-        val answerValue = answer.value ?: ""
+    suspend fun updateFlashcard(flashcardId: Long, deckId: Long) {
+        val flashcardDto = FlashcardDto(
+            flashcardId = flashcardId,
+            wordDefinition = wordDefinition.value!!.trim(),
+            wordTranslation = wordTranslation.value!!.trim()
+        )
 
-        if (questionValue.isNotBlank() && answerValue.isNotBlank()) {
-            viewModelScope.launch {
-                val updatedFlashcard = FlashcardDto(
-                    flashcardId = flashcardId,
-                    wordDefinition = questionValue,
-                    wordTranslation = answerValue
-                )
-                flashcardRepository.updateFlashcard(updatedFlashcard, currentDeckId)
-            }
-        }
+        flashcardRepository.updateFlashcard(flashcardDto, deckId)
+    }
+
+    //Validation:
+    private fun checkFields() {
+        isSaveFlashcardButtonEnabled.value = canSaveFlashcard()
+    }
+
+    private fun canSaveFlashcard(): Boolean {
+        return wordDefinition.value?.isNotBlank() == true
+                && wordTranslation.value?.isNotBlank() == true
+                && (wordDefinition.value!!.trim() != originalWordDefinition
+                || wordTranslation.value!!.trim() != originalWordTranslation)
     }
 }
