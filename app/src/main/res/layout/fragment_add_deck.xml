@@ -51,6 +51,8 @@
             android:layout_height="wrap_content"
             android:backgroundTint="#e0da2f"
             android:text="@string/dodaj"
+            android:enabled="false"
+            android:alpha="0.5"
             android:textColor="@android:color/black"
             android:textSize="40sp" />
     </LinearLayout>

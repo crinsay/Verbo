@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -17,7 +16,6 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class AddDeckFragment : Fragment() {
-
     private val args : AddDeckFragmentArgs by navArgs()
     private  lateinit var binding : FragmentAddDeckBinding
     private val viewModel: AddDeckViewModel by viewModels()
@@ -28,8 +26,6 @@ class AddDeckFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        viewModel.setLanguageId(args.languageId)
     }
 
     override fun onCreateView(
@@ -47,29 +43,24 @@ class AddDeckFragment : Fragment() {
 
         binding.apply{
             saveDeckButton.setOnClickListener{
-                val deckNameValue = viewModel.deckName.value
-                    if (deckNameValue.isNullOrEmpty()) {
-                        Toast.makeText(
-                            context,
-                            "Proszę uzupełnić nazwę zestawu",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    } else {
-                        lifecycleScope.launch { //BO NIE NADAZA
-                            viewModel.saveDeck()
-                            val action = AddDeckFragmentDirections.actionAddSetFragmentToAddWordFragment(viewModel.deckId, args.languageId)
-                            findNavController().navigate(action)
-                        }
-
-                    }
-
+                lifecycleScope.launch {
+                    viewModel.saveDeck(args.languageId)
+                    val action = AddDeckFragmentDirections.actionAddSetFragmentToAddWordFragment(viewModel.deckId, args.languageId)
+                    findNavController().navigate(action)
+                }
             }
+
             cancelSetButton.setOnClickListener {
                 val action = AddDeckFragmentDirections.actionAddSetFragmentToSetsFragment()
                 findNavController().navigate(action)
             }
 
+            viewModel.isSaveDeckButtonEnabled.observe(viewLifecycleOwner) { state ->
+                saveDeckButton.apply {
+                    isEnabled = state
+                    alpha = if (state) 1.0F else 0.5F
+                }
+            }
         }
-
     }
 }

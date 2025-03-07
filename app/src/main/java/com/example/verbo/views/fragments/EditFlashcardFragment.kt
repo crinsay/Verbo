@@ -23,7 +23,7 @@ class EditFlashcardFragment : Fragment() {
     companion object {
         fun newInstance() = EditFlashcardFragment()
     }
-    
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -35,7 +35,7 @@ class EditFlashcardFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentEditFlashcardBinding.inflate(inflater, container, false)
-        binding.editWordViewModel = viewModel
+        binding.editWordViewModel = viewModel //TODO: rename to editFlashcardViewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
         return binding.root

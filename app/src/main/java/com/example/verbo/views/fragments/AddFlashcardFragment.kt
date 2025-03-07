@@ -57,7 +57,10 @@ class AddFlashcardFragment : Fragment() {
         }
 
         binding.exitButton.setOnClickListener {
-            val action = AddFlashcardFragmentDirections.actionAddWordFragmentToSetsFragment(args.languageId)
+            val action = AddFlashcardFragmentDirections.actionAddWordFragmentToEditSetFragment(
+                deckId = args.deckId,
+                languageId = args.languageId
+            )
             findNavController().navigate(action)
         }
     }
