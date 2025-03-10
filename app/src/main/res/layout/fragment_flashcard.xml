@@ -6,7 +6,7 @@
     <data>
         <variable
             name="wordViewModel"
-            type="com.example.verbo.viewmodels.AddFlashcardViewModel" />
+            type="com.example.verbo.viewmodels.FlashcardViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -16,7 +16,7 @@
 
 
         <EditText
-            android:id="@+id/addWord"
+            android:id="@+id/word_definition_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
@@ -28,12 +28,12 @@
             android:textColor="@android:color/white"
             android:textColorHint="@android:color/darker_gray"
             android:textSize="40sp"
-            android:text="@={wordViewModel.question}"
+            android:text="@={wordViewModel.wordDefinition}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/addWordTranslate"
+            android:id="@+id/word_translation_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
@@ -44,8 +44,8 @@
             android:textColor="@android:color/white"
             android:textColorHint="@android:color/darker_gray"
             android:textSize="40sp"
-            android:text="@={wordViewModel.answer}"
-            app:layout_constraintTop_toBottomOf="@+id/addWord" />
+            android:text="@={wordViewModel.wordTranslation}"
+            app:layout_constraintTop_toBottomOf="@+id/word_definition_edit_text" />
 
         <LinearLayout
             android:id="@+id/linearLayout1"
@@ -58,22 +58,22 @@
             app:layout_constraintStart_toStartOf="parent">
 
             <Button
-                android:id="@+id/next_word_button"
+                android:id="@+id/save_flashcard_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#e0da2f"
                 android:textColor="@color/black"
-                android:text="@string/dalej"
+                android:text="@string/save"
                 android:textSize="40sp"
                 app:layout_constraintTop_toBottomOf="@+id/textView" />
 
             <Button
-                android:id="@+id/exit_button"
+                android:id="@+id/cancel_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#e0da2f"
                 android:textColor="@color/black"
-                android:text="@string/zako_cz"
+                android:text="@string/cancel"
                 android:textSize="40sp"
                 app:layout_constraintTop_toBottomOf="@+id/textView" />
         </LinearLayout>

@@ -15,6 +15,13 @@ class DecksRecyclerViewAdapter (private var items: MutableList<DeckDto>)
     var onItemClickListener: ((Long) -> Unit)? = null
     var onItemLongClickListener: ((View, DeckDto, Int) -> Unit)? = null
 
+    companion object {
+        fun create(): DecksRecyclerViewAdapter {
+            val adapter = DecksRecyclerViewAdapter(mutableListOf())
+            return adapter
+        }
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = RecyclerViewElementDeckBinding.inflate(inflater, parent, false)

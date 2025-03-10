@@ -14,16 +14,25 @@ class LanguagesRecyclerViewAdapter(private var items: MutableList<LanguageDto>)
     var onItemClickListener: ((Long) -> Unit)? = null
     var onItemLongClickListener: ((View, LanguageDto, Int) -> Unit)? = null
 
+    companion object {
+        fun create(): LanguagesRecyclerViewAdapter {
+            val adapter = LanguagesRecyclerViewAdapter(mutableListOf())
+            return adapter
+        }
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = RecyclerViewElementLanguageBinding.inflate(inflater, parent, false)
 
         return ViewHolder(binding)
     }
+
     fun itemRemoved(position: Int) {
         items.removeAt(position)
         notifyItemRemoved(position)
     }
+
     override fun getItemCount(): Int = items.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

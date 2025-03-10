@@ -64,10 +64,10 @@ class EditDeckFragment : Fragment() {
                         true
                     }
                     R.id.edit_option -> {
-                        val action = EditDeckFragmentDirections.actionEditSetFragmentToEditWordFragment(
-                            flashcardId = flashcard.flashcardId,
+                        val action = EditDeckFragmentDirections.actionEditSetFragmentToAddWordFragment(
+                            languageId = args.languageId,
                             deckId =  args.deckId,
-                            languageId = args.languageId
+                            flashcardId = flashcard.flashcardId
                         )
                         findNavController().navigate(action)
                         true

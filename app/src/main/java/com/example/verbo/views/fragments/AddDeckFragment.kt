@@ -41,17 +41,17 @@ class AddDeckFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.apply{
+        binding.apply {
             saveDeckButton.setOnClickListener{
                 lifecycleScope.launch {
                     viewModel.saveDeck(args.languageId)
-                    val action = AddDeckFragmentDirections.actionAddSetFragmentToAddWordFragment(viewModel.deckId, args.languageId)
+                    val action = AddDeckFragmentDirections.actionAddSetFragmentToEditSetFragment(viewModel.deckId, args.languageId)
                     findNavController().navigate(action)
                 }
             }
 
             cancelSetButton.setOnClickListener {
-                val action = AddDeckFragmentDirections.actionAddSetFragmentToSetsFragment()
+                val action = AddDeckFragmentDirections.actionAddSetFragmentToSetsFragment(args.languageId)
                 findNavController().navigate(action)
             }
 

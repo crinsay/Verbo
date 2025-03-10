@@ -1,6 +1,5 @@
 package com.example.verbo.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,7 +11,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class EditFlashcardViewModel @Inject constructor(
+class FlashcardViewModel @Inject constructor(
     private val flashcardRepository: IFlashcardRepository
 ): ViewModel() {
     val wordDefinition = MutableLiveData<String>()
@@ -36,14 +35,22 @@ class EditFlashcardViewModel @Inject constructor(
         }
     }
 
-    suspend fun updateFlashcard(flashcardId: Long, deckId: Long) {
+    suspend fun saveFlashcard(flashcardId: Long, deckId: Long) {
         val flashcardDto = FlashcardDto(
             flashcardId = flashcardId,
             wordDefinition = wordDefinition.value!!.trim(),
             wordTranslation = wordTranslation.value!!.trim()
         )
 
-        flashcardRepository.updateFlashcard(flashcardDto, deckId)
+        if (flashcardId != 0L) {
+            flashcardRepository.updateFlashcard(flashcardDto, deckId)
+        }
+        else {
+            flashcardRepository.insertFlashcard(flashcardDto, deckId)
+
+            wordDefinition.postValue("")
+            wordTranslation.postValue("")
+        }
     }
 
     //Validation:

@@ -20,7 +20,7 @@
 
     <fragment
         android:id="@+id/addWordFragment"
-        android:name="com.example.verbo.views.fragments.AddFlashcardFragment"
+        android:name="com.example.verbo.views.fragments.FlashcardFragment"
         android:label="AddWordFragment" >
         <argument
             android:name="deckId"
@@ -33,6 +33,10 @@
         <action
             android:id="@+id/action_addWordFragment_to_editSetFragment"
             app:destination="@id/editSetFragment" />
+        <argument
+            android:name="flashcardId"
+            app:argType="long"
+            android:defaultValue="0L" />
     </fragment>
     <fragment
         android:id="@+id/languagesListFragment"
@@ -82,16 +86,16 @@
         android:id="@+id/addSetFragment"
         android:name="com.example.verbo.views.fragments.AddDeckFragment"
         android:label="AddSetFragment" >
-        <action
-            android:id="@+id/action_addSetFragment_to_setsFragment"
-            app:destination="@id/setsFragment" />
-        <action
-            android:id="@+id/action_addSetFragment_to_addWordFragment"
-            app:destination="@id/addWordFragment" />
         <argument
             android:name="languageId"
             app:argType="long"
             android:defaultValue="0L" />
+        <action
+            android:id="@+id/action_addSetFragment_to_editSetFragment"
+            app:destination="@id/editSetFragment" />
+        <action
+            android:id="@+id/action_addSetFragment_to_setsFragment"
+            app:destination="@id/setsFragment" />
     </fragment>
     <fragment
         android:id="@+id/editSetFragment"
@@ -109,37 +113,11 @@
             app:argType="long"
             android:defaultValue="0L" />
         <action
-            android:id="@+id/action_editSetFragment_to_editWordFragment"
-            app:destination="@id/editWordFragment" />
-        <action
             android:id="@+id/action_editSetFragment_to_addWordFragment"
             app:destination="@id/addWordFragment" />
         <action
             android:id="@+id/action_editSetFragment_self"
             app:destination="@id/editSetFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/editWordFragment"
-        android:name="com.example.verbo.views.fragments.EditFlashcardFragment"
-        android:label="EditWordFragment" >
-        <action
-            android:id="@+id/action_editWordFragment_to_editSetFragment"
-            app:destination="@id/editSetFragment" />
-        <argument
-            android:name="flashcardId"
-            app:argType="long"
-            android:defaultValue="0L" />
-        <argument
-            android:name="deckId"
-            app:argType="long"
-            android:defaultValue="0L" />
-        <action
-            android:id="@+id/action_editWordFragment_to_setsFragment"
-            app:destination="@id/setsFragment" />
-        <argument
-            android:name="languageId"
-            app:argType="long"
-            android:defaultValue="0L" />
     </fragment>
     <fragment
         android:id="@+id/studyFragment"
