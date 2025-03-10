@@ -51,10 +51,10 @@ class EditDeckViewModel @Inject constructor(
             deckId = deckId,
             name = deckName.value!!.trim()
         )
+        deckRepository.updateDeck(deckDto, languageId)
+
         deckName.value = deckDto.name //To remove whitespaces in EditText as well because we are staying in current fragment after saveDeck.
         originalDeckName = deckDto.name
-
-        deckRepository.updateDeck(deckDto, languageId)
     }
 
     fun getFlashcardsByDeckId(deckId: Long) {

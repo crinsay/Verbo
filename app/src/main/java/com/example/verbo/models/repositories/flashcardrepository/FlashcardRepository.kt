@@ -38,4 +38,9 @@ class FlashcardRepository@Inject constructor(
         val flashcardDtos = flashcards.mapToFlashcardDtos()
         return flashcardDtos
     }
+
+    override suspend fun countFlashcardsByDeckId(deckId: Long): Int {
+        val flashcardsCount = flashcardDao.countFlashcardsByDeckId(deckId)
+        return flashcardsCount
+    }
 }
