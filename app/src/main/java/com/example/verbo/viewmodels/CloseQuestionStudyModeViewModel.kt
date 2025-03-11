@@ -2,10 +2,12 @@ package com.example.verbo.viewmodels
 
 import android.graphics.Color
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.verbo.common.dtos.FlashcardDto
+import com.example.verbo.models.entities.Flashcard
 import com.example.verbo.models.repositories.flashcardrepository.IFlashcardRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
@@ -14,86 +16,94 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CloseQuestionStudyModeViewModel @Inject constructor(
-    private val flashCardRepository: IFlashcardRepository
+    private val flashcardRepository: IFlashcardRepository
 ) : ViewModel() {
-    private var currentDeckId: Long = -1L
-    var currentQuestionIndex = 0
-    private var correctAnswerIndex = 0
-    private var flashcards: List<FlashcardDto> = listOf()
+    private val flashcards: MutableList<FlashcardDto> = mutableListOf()
 
-    val answer1 = MutableLiveData<String>()
-    val answer2 = MutableLiveData<String>()
-    val answer3 = MutableLiveData<String>()
-    val answer4 = MutableLiveData<String>()
-    val question = MutableLiveData<String>()
-    val score = MutableLiveData(0)
-    val isTestFinished = MutableLiveData(false)
+    private var currentQuestionNumber = 0
+    private var currentCorrectAnswerIndex = 0
 
-    val buttonColors = MutableLiveData<List<Int>>(List(4) { Color.parseColor("#e0da2f") })
+    private val _question = MutableLiveData<String>()
+    val question: LiveData<String> = _question
+
+    private val _answer1 = MutableLiveData<String>()
+    val answer1: LiveData<String> = _answer1
+
+    private val _answer2 = MutableLiveData<String>()
+    val answer2: LiveData<String> = _answer2
+
+    private val _answer3 = MutableLiveData<String>()
+    val answer3: LiveData<String> = _answer3
+
+    private val _answer4 = MutableLiveData<String>()
+    val answer4: LiveData<String> = _answer4
+
+    private val _isStudyFinished = MutableLiveData(false)
+    val isStudyFinished: LiveData<Boolean> = _isStudyFinished
+
+    private val _answerButtonsColors = MutableLiveData(List(4) { Color.parseColor("#e0da2f") })
+    val answerButtonsColors: LiveData<List<Int>> = _answerButtonsColors
     private val defaultColor = Color.parseColor("#e0da2f")
     private val correctColor = Color.parseColor("#4CAF50")
-    private val wrongColor = Color.parseColor("#F44336")
+    private val incorrectColor = Color.parseColor("#F44336")
 
-    private val questionDelay = 1000L
-
-    fun setDeckId(deckId: Long) {
-        Log.d("CloseQuestion", "Setting deckId: $deckId")
-        currentDeckId = deckId
-        loadFlashcards()
-    }
-
-    private fun loadFlashcards() {
+    fun prepareFlashcards(deckId: Long) {
         viewModelScope.launch {
-            flashcards = flashCardRepository.getFlashcardsByDeckId(currentDeckId)
-            Log.d("CloseQuestion", "Loaded flashcards: ${flashcards.size}")
-            if (flashcards.size >= 4) {
-                showNextQuestion()
-            }
+            val resultFlashcards = flashcardRepository.getFlashcardsByDeckId(deckId)
+            flashcards.addAll(resultFlashcards.shuffled())
+
+            showNextFlashcard()
         }
     }
 
-    private fun showNextQuestion() {
-        if (currentQuestionIndex >= flashcards.size) {
-            isTestFinished.value = true
+    private fun showNextFlashcard() {
+        if (isStudyFinished()) {
+            _isStudyFinished.value = true
             return
         }
 
-        val questionFlashcard = flashcards[currentQuestionIndex]
-        val incorrectAnswers = flashcards.filter { it.flashcardId != questionFlashcard.flashcardId }
-            .shuffled()
-            .take(3)
-            .map { it.wordTranslation }
+        val currentFlashcard = flashcards[currentQuestionNumber - 1]
+        val incorrectRandomAnswers = getRandomIncorrectAnswers(currentFlashcard)
+        val allRandomAnswers = (incorrectRandomAnswers + currentFlashcard.wordTranslation).shuffled()
 
-        val allAnswers = (incorrectAnswers + questionFlashcard.wordTranslation).shuffled()
-        correctAnswerIndex = allAnswers.indexOf(questionFlashcard.wordTranslation)
+        currentCorrectAnswerIndex = allRandomAnswers.indexOf(currentFlashcard.wordTranslation)
 
-        question.value = questionFlashcard.wordDefinition
-        answer1.value = allAnswers[0]
-        answer2.value = allAnswers[1]
-        answer3.value = allAnswers[2]
-        answer4.value = allAnswers[3]
+        _question.value = currentFlashcard.wordDefinition
+        _answer1.value = allRandomAnswers[0]
+        _answer2.value = allRandomAnswers[1]
+        _answer3.value = allRandomAnswers[2]
+        _answer4.value = allRandomAnswers[3]
     }
 
-    fun checkAnswer(selectedAnswerIndex: Int) {
+    private fun getRandomIncorrectAnswers(currentFlashcard: FlashcardDto): List<String> {
+        val incorrectAnswers = flashcards.filter { it.flashcardId != currentFlashcard.flashcardId }
+            .map { it.wordTranslation }
+            .shuffled()
+            .take(3)
+
+        return incorrectAnswers
+    }
+
+    fun checkAnswerAndShowNextFlashcard(selectedAnswerIndex: Int) {
         viewModelScope.launch {
             val newColors = MutableList(4) { defaultColor }
-            newColors[correctAnswerIndex] = correctColor
+            newColors[currentCorrectAnswerIndex] = correctColor
 
-            if (selectedAnswerIndex == correctAnswerIndex) {
-                score.value = (score.value ?: 0) + 1
-            } else {
-                newColors[selectedAnswerIndex] = wrongColor
+            if (selectedAnswerIndex != currentCorrectAnswerIndex) {
+                newColors[selectedAnswerIndex] = incorrectColor
             }
 
-            buttonColors.value = newColors
+            _answerButtonsColors.value = newColors
 
+            //Wait a little bit:
+            delay(1500L)
 
-            delay(questionDelay)
-
-
-            currentQuestionIndex++
-            buttonColors.value = List(4) { defaultColor }
-            showNextQuestion()
+            _answerButtonsColors.value = List(4) { defaultColor }
+            showNextFlashcard()
         }
+    }
+
+    private fun isStudyFinished(): Boolean {
+        return ++currentQuestionNumber > flashcards.size
     }
 }

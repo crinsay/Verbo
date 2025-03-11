@@ -21,7 +21,8 @@ class CloseQuestionStudyModeFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.setDeckId(args.deckId)
+
+        viewModel.prepareFlashcards(args.deckId)
     }
 
     override fun onCreateView(
@@ -31,68 +32,43 @@ class CloseQuestionStudyModeFragment : Fragment() {
         binding = FragmentCloseQuestionStudyModeBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.closedQuestionViewModel = viewModel
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setupObservers()
-        setupClickListeners()
-    }
-
-    private fun setupObservers() {
-        viewModel.question.observe(viewLifecycleOwner) { question ->
-            binding.questionViewWord.text = question
-        }
-
-        viewModel.answer1.observe(viewLifecycleOwner) { answer ->
-            binding.answer1Button.text = answer
-        }
-
-        viewModel.answer2.observe(viewLifecycleOwner) { answer ->
-            binding.answer2Button.text = answer
-        }
-
-        viewModel.answer3.observe(viewLifecycleOwner) { answer ->
-            binding.answer3Button.text = answer
-        }
-
-        viewModel.answer4.observe(viewLifecycleOwner) { answer ->
-            binding.answer4Button.text = answer
-        }
-
-
-        viewModel.isTestFinished.observe(viewLifecycleOwner) { isFinished ->
-            if (isFinished) {
-                showTestResults()
-            }
-        }
-    }
-
-    private fun setupClickListeners() {
         binding.apply {
-            answer1Button.setOnClickListener { viewModel.checkAnswer(0) }
-            answer2Button.setOnClickListener { viewModel.checkAnswer(1) }
-            answer3Button.setOnClickListener { viewModel.checkAnswer(2) }
-            answer4Button.setOnClickListener { viewModel.checkAnswer(3) }
+            answer1Button.setOnClickListener {
+                viewModel.checkAnswerAndShowNextFlashcard(0)
+            }
+
+            answer2Button.setOnClickListener {
+                viewModel.checkAnswerAndShowNextFlashcard(1)
+            }
+
+            answer3Button.setOnClickListener {
+                viewModel.checkAnswerAndShowNextFlashcard(2)
+            }
+
+            answer4Button.setOnClickListener {
+                viewModel.checkAnswerAndShowNextFlashcard(3)
+            }
 
             cancelButton.setOnClickListener {
-                val action = CloseQuestionStudyModeFragmentDirections
-                    .actionCloseQuestionFragmentToStudyFragment(args.deckId)
+                val action = CloseQuestionStudyModeFragmentDirections.actionCloseQuestionFragmentToStudyFragment(args.deckId)
                 findNavController().navigate(action)
             }
         }
-    }
 
-    private fun showTestResults() {
-        Toast.makeText(
-            context,
-            "Koniec Nauki!",
-            Toast.LENGTH_LONG
-        ).show()
-        val action = CloseQuestionStudyModeFragmentDirections
-            .actionCloseQuestionFragmentToStudyFragment(args.deckId)
-        findNavController().navigate(action)
+        viewModel.isStudyFinished.observe(viewLifecycleOwner) { isFinished ->
+            if (isFinished) {
+                Toast.makeText(requireContext(), "Study ended", Toast.LENGTH_LONG).show()
+
+                val action = CloseQuestionStudyModeFragmentDirections.actionCloseQuestionFragmentToStudyFragment(args.deckId)
+                findNavController().navigate(action)
+            }
+        }
     }
 }
