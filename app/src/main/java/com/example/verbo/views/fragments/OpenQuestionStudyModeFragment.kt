@@ -15,14 +15,14 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class OpenQuestionStudyModeFragment : Fragment() {
-
+    private val viewModel: OpenQuestionStudyModeViewModel by viewModels()
     private val args: OpenQuestionStudyModeFragmentArgs by navArgs()
     private lateinit var binding: FragmentOpenQuestionStudyModeBinding
-    private val viewModel: OpenQuestionStudyModeViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.setDeckId(args.deckId)
+
+        viewModel.prepareFlashcards(args.deckId)
     }
 
     override fun onCreateView(
@@ -40,39 +40,31 @@ class OpenQuestionStudyModeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setupClickListeners()
-        setupObservers()
-    }
+        binding.apply {
+            nextWordButton.setOnClickListener {
+                viewModel.checkAnswerAndShowNextFlashcard()
+            }
 
-    private fun setupClickListeners() {
-        binding.nextWordButton.setOnClickListener {
-            viewModel.checkAnswer()
-        }
+            Powrot.setOnClickListener {
+                val action = OpenQuestionStudyModeFragmentDirections.actionOpenQuestionFragmentToStudyFragment(args.deckId)
+                findNavController().navigate(action)
+            }
 
-        binding.Powrot.setOnClickListener {
-            val action = OpenQuestionStudyModeFragmentDirections
-                .actionOpenQuestionFragmentToStudyFragment(args.deckId)
-            findNavController().navigate(action)
-        }
-    }
-
-    private fun setupObservers() {
-        viewModel.isTestFinished.observe(viewLifecycleOwner) { isFinished ->
-            if (isFinished) {
-                showTestResults()
+            viewModel.isNextFlashcardButtonEnabled.observe(viewLifecycleOwner) { state ->
+                nextWordButton.apply {
+                    isEnabled = state
+                    alpha = if (state) 1.0F else 0.5F
+                }
             }
         }
-    }
 
-    private fun showTestResults() {
-        Toast.makeText(
-            context,
-            "Koniec testu!",
-            Toast.LENGTH_LONG
-        ).show()
+        viewModel.isStudyFinished.observe(viewLifecycleOwner) { isFinished ->
+            if (isFinished) {
+                Toast.makeText(requireContext(), "Study ended", Toast.LENGTH_LONG).show()
 
-        val action = OpenQuestionStudyModeFragmentDirections
-            .actionOpenQuestionFragmentToStudyFragment(args.deckId)
-        findNavController().navigate(action)
+                val action = OpenQuestionStudyModeFragmentDirections.actionOpenQuestionFragmentToStudyFragment(args.deckId)
+                findNavController().navigate(action)
+            }
+        }
     }
 }
