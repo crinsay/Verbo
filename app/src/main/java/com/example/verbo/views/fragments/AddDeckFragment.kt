@@ -56,7 +56,7 @@ class AddDeckFragment : Fragment() {
                             viewModel.selectedLanguageId = languageId
                         }
 
-                        binding.spinnerLanguages.apply {
+                        binding.languagesSpinner.apply {
                             adapter = languagesAdapter
                             onItemSelectedListener = languagesAdapter.onItemSelectedListener
 

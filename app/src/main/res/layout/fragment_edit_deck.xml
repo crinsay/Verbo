@@ -20,6 +20,16 @@
             android:backgroundTint="#e0da2f"
             android:drawableRight="@drawable/baseline_arrow_back" />
 
+        <Spinner
+            android:id="@+id/languages_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#e0da2f"
+            android:padding="10dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:spinnerMode="dropdown" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

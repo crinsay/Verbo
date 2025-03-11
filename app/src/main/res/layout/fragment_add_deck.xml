@@ -21,7 +21,7 @@
             android:drawableRight="@drawable/baseline_arrow_back" />
 
         <Spinner
-            android:id="@+id/spinnerLanguages"
+            android:id="@+id/languages_spinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="#e0da2f"
