@@ -17,7 +17,7 @@ import javax.inject.Inject
 class OpenQuestionStudyModeViewModel @Inject constructor(
     private val flashcardRepository: IFlashcardRepository
 ) : ViewModel() {
-    private var currentQuestionNumber = 0
+    private var currentFlashcardNumber = 0
     private val flashcards: MutableList<FlashcardDto> = mutableListOf()
 
     private val _question = MutableLiveData<String>()
@@ -50,7 +50,7 @@ class OpenQuestionStudyModeViewModel @Inject constructor(
             return
         }
 
-        val currentFlashcard = flashcards[currentQuestionNumber - 1]
+        val currentFlashcard = flashcards[currentFlashcardNumber - 1]
 
         _question.value = currentFlashcard.wordDefinition
         _correctAnswer.value = "???"
@@ -59,7 +59,7 @@ class OpenQuestionStudyModeViewModel @Inject constructor(
 
     fun checkAnswerAndShowNextFlashcard() {
         viewModelScope.launch {
-            _correctAnswer.value = flashcards[currentQuestionNumber - 1].wordTranslation
+            _correctAnswer.value = flashcards[currentFlashcardNumber - 1].wordTranslation
 
             //Wait a little bit:
             delay(1500)
@@ -69,7 +69,7 @@ class OpenQuestionStudyModeViewModel @Inject constructor(
     }
 
     private fun isStudyFinished(): Boolean {
-        return ++currentQuestionNumber > flashcards.size
+        return ++currentFlashcardNumber > flashcards.size
     }
 
     //Validation:

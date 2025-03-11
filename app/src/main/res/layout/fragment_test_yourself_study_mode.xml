@@ -36,7 +36,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@android:color/white"
-            android:text="@{testQuestionViewModel.whichQuestion}"
+            android:text='@{"Flashcard: " + testQuestionViewModel.currentFlashcardNumber + " of " + testQuestionViewModel.flashcardsCount}'
             android:textSize="14sp"
             android:layout_marginBottom="32dp"
             android:textStyle="bold" />
@@ -46,7 +46,7 @@
             android:layout_height="wrap_content"
             android:text="@{testQuestionViewModel.answer1}"
             android:textColor="@android:color/black"
-            android:backgroundTint="@{testQuestionViewModel.buttonColors[0]}"
+            android:backgroundTint="@{testQuestionViewModel.answerButtonsColors[0]}"
             android:textSize="28sp"
             android:layout_marginBottom="16dp" />
 
@@ -54,7 +54,7 @@
             android:id="@+id/answer_2_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@{testQuestionViewModel.buttonColors[1]}"
+            android:backgroundTint="@{testQuestionViewModel.answerButtonsColors[1]}"
             android:text="@{testQuestionViewModel.answer2}"
             android:textColor="@android:color/black"
             android:textSize="28sp"
@@ -64,7 +64,7 @@
             android:id="@+id/answer_3_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@{testQuestionViewModel.buttonColors[2]}"
+            android:backgroundTint="@{testQuestionViewModel.answerButtonsColors[2]}"
             android:text="@{testQuestionViewModel.answer3}"
             android:textColor="@android:color/black"
             android:textSize="28sp"
@@ -74,7 +74,7 @@
             android:id="@+id/answer_4_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@{testQuestionViewModel.buttonColors[3]}"
+            android:backgroundTint="@{testQuestionViewModel.answerButtonsColors[3]}"
             android:text="@{testQuestionViewModel.answer4}"
             android:textColor="@android:color/black"
             android:textSize="28sp" />

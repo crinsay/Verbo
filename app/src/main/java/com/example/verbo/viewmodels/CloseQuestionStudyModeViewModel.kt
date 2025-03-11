@@ -20,7 +20,7 @@ class CloseQuestionStudyModeViewModel @Inject constructor(
 ) : ViewModel() {
     private val flashcards: MutableList<FlashcardDto> = mutableListOf()
 
-    private var currentQuestionNumber = 0
+    private var currentFlashcardNumber = 0
     private var currentCorrectAnswerIndex = 0
 
     private val _question = MutableLiveData<String>()
@@ -62,7 +62,7 @@ class CloseQuestionStudyModeViewModel @Inject constructor(
             return
         }
 
-        val currentFlashcard = flashcards[currentQuestionNumber - 1]
+        val currentFlashcard = flashcards[currentFlashcardNumber - 1]
         val incorrectRandomAnswers = getRandomIncorrectAnswers(currentFlashcard)
         val allRandomAnswers = (incorrectRandomAnswers + currentFlashcard.wordTranslation).shuffled()
 
@@ -104,6 +104,6 @@ class CloseQuestionStudyModeViewModel @Inject constructor(
     }
 
     private fun isStudyFinished(): Boolean {
-        return ++currentQuestionNumber > flashcards.size
+        return ++currentFlashcardNumber > flashcards.size
     }
 }
