@@ -51,6 +51,10 @@ class TestYourselfStudyModeViewModel @Inject constructor(
     private val correctColor = Color.parseColor("#4CAF50")
     private val incorrectColor = Color.parseColor("#F44336")
 
+    private val _canChooseAnswer = MutableLiveData(false)
+    val canChooseAnswer: LiveData<Boolean> = _canChooseAnswer
+
+
     fun prepareFlashcards(deckId: Long) {
         viewModelScope.launch {
             val resultFlashcards = flashcardRepository.getFlashcardsByDeckId(deckId)
@@ -78,6 +82,8 @@ class TestYourselfStudyModeViewModel @Inject constructor(
         _answer2.value = allRandomAnswers[1]
         _answer3.value = allRandomAnswers[2]
         _answer4.value = allRandomAnswers[3]
+
+        _canChooseAnswer.value = true
     }
 
     private fun getRandomIncorrectAnswers(currentFlashcard: FlashcardDto): List<String> {
@@ -91,6 +97,8 @@ class TestYourselfStudyModeViewModel @Inject constructor(
 
     fun checkAnswerAndShowNextFlashcard(selectedAnswerIndex: Int) {
         viewModelScope.launch {
+            _canChooseAnswer.value = false
+
             val newColors = MutableList(4) { defaultColor }
             newColors[currentCorrectAnswerIndex] = correctColor
 

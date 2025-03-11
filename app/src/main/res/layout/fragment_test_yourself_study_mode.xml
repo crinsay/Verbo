@@ -48,6 +48,7 @@
             android:textColor="@android:color/black"
             android:backgroundTint="@{testQuestionViewModel.answerButtonsColors[0]}"
             android:textSize="28sp"
+            android:enabled="false"
             android:layout_marginBottom="16dp" />
 
         <Button
@@ -58,6 +59,7 @@
             android:text="@{testQuestionViewModel.answer2}"
             android:textColor="@android:color/black"
             android:textSize="28sp"
+            android:enabled="false"
             android:layout_marginBottom="16dp" />
 
         <Button
@@ -68,6 +70,7 @@
             android:text="@{testQuestionViewModel.answer3}"
             android:textColor="@android:color/black"
             android:textSize="28sp"
+            android:enabled="false"
             android:layout_marginBottom="16dp" />
 
         <Button
@@ -77,6 +80,7 @@
             android:backgroundTint="@{testQuestionViewModel.answerButtonsColors[3]}"
             android:text="@{testQuestionViewModel.answer4}"
             android:textColor="@android:color/black"
+            android:enabled="false"
             android:textSize="28sp" />
 
     </LinearLayout>

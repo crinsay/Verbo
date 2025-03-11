@@ -37,28 +37,22 @@ class StudyModeMenuFragment : Fragment() {
 
         binding.apply {
             cancelButton.setOnClickListener {
-                val action = StudyModeMenuFragmentDirections.actionStudyFragmentToSetsFragment()
+                val action = StudyModeMenuFragmentDirections.actionStudyFragmentToSetsFragment(args.languageId)
                 findNavController().navigate(action)
             }
 
             closedQuestionsButton.setOnClickListener {
-                val action = StudyModeMenuFragmentDirections.actionStudyFragmentToCloseQuestionFragment(
-                    args.deckId
-                )
+                val action = StudyModeMenuFragmentDirections.actionStudyFragmentToCloseQuestionFragment(args.deckId)
                 findNavController().navigate(action)
             }
 
             openQuestionsButton.setOnClickListener {
-                val action = StudyModeMenuFragmentDirections.actionStudyFragmentToOpenQuestionFragment(
-                    args.deckId
-                )
+                val action = StudyModeMenuFragmentDirections.actionStudyFragmentToOpenQuestionFragment(args.deckId)
                 findNavController().navigate(action)
             }
 
             timeQuestionsButton.setOnClickListener {
-                val action = StudyModeMenuFragmentDirections.actionStudyFragmentToTestQuestionFragment(
-                    args.deckId
-                )
+                val action = StudyModeMenuFragmentDirections.actionStudyFragmentToTestQuestionFragment(args.deckId)
                 findNavController().navigate(action)
             }
 

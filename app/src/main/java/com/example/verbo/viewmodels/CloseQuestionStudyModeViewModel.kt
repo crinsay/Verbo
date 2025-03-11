@@ -3,6 +3,7 @@ package com.example.verbo.viewmodels
 import android.graphics.Color
 import android.util.Log
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -47,6 +48,10 @@ class CloseQuestionStudyModeViewModel @Inject constructor(
     private val correctColor = Color.parseColor("#4CAF50")
     private val incorrectColor = Color.parseColor("#F44336")
 
+    private val _canChooseAnswer = MutableLiveData(false)
+    val canChooseAnswer: LiveData<Boolean> = _canChooseAnswer
+
+
     fun prepareFlashcards(deckId: Long) {
         viewModelScope.launch {
             val resultFlashcards = flashcardRepository.getFlashcardsByDeckId(deckId)
@@ -73,6 +78,8 @@ class CloseQuestionStudyModeViewModel @Inject constructor(
         _answer2.value = allRandomAnswers[1]
         _answer3.value = allRandomAnswers[2]
         _answer4.value = allRandomAnswers[3]
+
+        _canChooseAnswer.value = true
     }
 
     private fun getRandomIncorrectAnswers(currentFlashcard: FlashcardDto): List<String> {
@@ -86,6 +93,8 @@ class CloseQuestionStudyModeViewModel @Inject constructor(
 
     fun checkAnswerAndShowNextFlashcard(selectedAnswerIndex: Int) {
         viewModelScope.launch {
+            _canChooseAnswer.value = false
+
             val newColors = MutableList(4) { defaultColor }
             newColors[currentCorrectAnswerIndex] = correctColor
 

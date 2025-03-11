@@ -60,6 +60,13 @@ class CloseQuestionStudyModeFragment : Fragment() {
                 val action = CloseQuestionStudyModeFragmentDirections.actionCloseQuestionFragmentToStudyFragment(args.deckId)
                 findNavController().navigate(action)
             }
+
+            viewModel.canChooseAnswer.observe(viewLifecycleOwner) { state ->
+                answer1Button.isEnabled = state
+                answer2Button.isEnabled = state
+                answer3Button.isEnabled = state
+                answer4Button.isEnabled = state
+            }
         }
 
         viewModel.isStudyFinished.observe(viewLifecycleOwner) { isFinished ->
