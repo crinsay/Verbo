@@ -13,7 +13,9 @@ import com.example.verbo.R
 import com.example.verbo.databinding.FragmentMainMenuBinding
 import com.example.verbo.databinding.FragmentOpenQuestionStudyModeBinding
 import com.example.verbo.viewmodels.MainMenuViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainMenuFragment : Fragment() {
     private val viewModel: MainMenuViewModel by viewModels()
     private lateinit var binding: FragmentMainMenuBinding
@@ -25,7 +27,7 @@ class MainMenuFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // TODO: Use the ViewModel
+        viewModel.checkIfAnyLanguageExist()
     }
 
     override fun onCreateView(
@@ -47,6 +49,17 @@ class MainMenuFragment : Fragment() {
             Zestawy.setOnClickListener {
                 val action = MainMenuFragmentDirections.actionMenuFragmentToSetsFragment(0L)
                 findNavController().navigate(action)
+            }
+
+            viewModel.canGoToDecks.observe(viewLifecycleOwner) { state ->
+                Zestawy.apply {
+                    isEnabled = state
+                    alpha = if (state) 1.0F else 0.5F
+                }
+
+                if (!state) {
+                    cannotGoToDecksTextView.visibility = View.VISIBLE
+                }
             }
         }
     }

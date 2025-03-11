@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class StudyModeMenuViewModel  @Inject constructor(
+class StudyModeMenuViewModel @Inject constructor(
     private val flashcardRepository: IFlashcardRepository
 ): ViewModel() {
     private val _canStudy = MutableLiveData<Boolean>()

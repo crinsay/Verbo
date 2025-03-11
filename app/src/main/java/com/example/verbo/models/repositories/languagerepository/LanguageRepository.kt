@@ -38,4 +38,9 @@ class LanguageRepository @Inject constructor(
 
         return languageDto
     }
+
+    override suspend fun isAnyLanguageExist(): Boolean {
+        val isAnyLanguageExist = languageDao.isAnyLanguageExist()
+        return isAnyLanguageExist
+    }
 }

@@ -45,6 +45,8 @@
                 android:textColor="@color/black"
                 android:text="@string/zestawy"
                 android:textSize="40sp"
+                android:enabled="false"
+                android:alpha="0.5"
                 android:drawableLeft="@drawable/baseline_dataset"
                 app:layout_constraintTop_toBottomOf="@+id/textView" />
 
@@ -58,7 +60,20 @@
                 android:textSize="40sp"
                 android:drawableLeft="@drawable/baseline_flag"
                 app:layout_constraintTop_toBottomOf="@+id/textView" />
+
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/cannot_go_to_decks_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="You must have atleast one language to be able to go to decks."
+            android:textColor="#e0da2f"
+            android:textSize="16dp"
+            android:layout_margin="20dp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout1" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
