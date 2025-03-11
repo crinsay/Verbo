@@ -14,8 +14,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DecksViewModel @Inject constructor(
+    private val languageRepository: ILanguageRepository,
     private val deckRepository: IDeckRepository,
-    private val languageRepository: ILanguageRepository
 ): ViewModel() {
     private val _languages = MutableStateFlow<List<LanguageDto>>(emptyList())
     val languages: StateFlow<List<LanguageDto>> = _languages
