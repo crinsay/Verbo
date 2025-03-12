@@ -35,4 +35,11 @@ interface FlashcardDao {
         ORDER BY wordDefinition COLLATE NOCASE, wordTranslation COLLATE NOCASE
     """)
     suspend fun getFlashcardsByDeckId(deckId: Long): List<Flashcard>
+
+    @Query("""
+        SELECT COUNT(*)
+        FROM ${DatabaseConstants.TableNames.FLASHCARD}
+        WHERE deckId = :deckId
+    """)
+    suspend fun countFlashcardsByDeckId(deckId: Long): Int
 }

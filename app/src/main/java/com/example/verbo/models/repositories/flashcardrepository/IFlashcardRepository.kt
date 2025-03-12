@@ -8,4 +8,5 @@ interface IFlashcardRepository {
     suspend fun deleteFlashcard(flashcardDtoToDelete: FlashcardDto)
     suspend fun getFlashcardById(flashcardDtoId: Long): FlashcardDto
     suspend fun getFlashcardsByDeckId(deckId: Long): List<FlashcardDto>
+    suspend fun countFlashcardsByDeckId(deckId: Long): Int
 }

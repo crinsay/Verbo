@@ -4,31 +4,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <variable
-            name="languageViewModel"
-            type="com.example.verbo.viewmodels.LanguageViewModel" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:background="#404040"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:context=".views.fragments.MainMenuFragment">
 
-
-        <EditText
-            android:id="@+id/editTextLanguage"
+        <TextView
+            android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginTop="150dp"
-            android:backgroundTint="#e0da2f"
-            android:hint="@string/podaj_j_zyk"
-            android:inputType="text"
-            android:textColor="@android:color/white"
-            android:textColorHint="@android:color/darker_gray"
-            android:textSize="40sp"
-            android:text="@={languageViewModel.languageName}"
+            android:text="@string/verbo"
+            android:textAlignment="center"
+            android:textSize="55sp"
+            android:background="#e0da2f"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -40,30 +34,47 @@
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView">
 
             <Button
-                android:id="@+id/save_language_button"
+                android:id="@+id/Zestawy"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#e0da2f"
                 android:textColor="@color/black"
-                android:text="@string/zapisz"
+                android:text="@string/zestawy"
                 android:textSize="40sp"
                 android:enabled="false"
                 android:alpha="0.5"
+                android:drawableLeft="@drawable/baseline_dataset"
                 app:layout_constraintTop_toBottomOf="@+id/textView" />
 
             <Button
-                android:id="@+id/cancel_button"
+                android:id="@+id/Jezyki"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#e0da2f"
                 android:textColor="@color/black"
-                android:text="@string/anuluj"
+                android:text="@string/moje_j_zyki"
                 android:textSize="40sp"
+                android:drawableLeft="@drawable/baseline_flag"
                 app:layout_constraintTop_toBottomOf="@+id/textView" />
+
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/cannot_go_to_decks_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="You must have atleast one language to be able to go to decks."
+            android:textColor="#e0da2f"
+            android:textSize="16dp"
+            android:layout_margin="20dp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout1" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

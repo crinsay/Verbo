@@ -8,4 +8,5 @@ interface ILanguageRepository {
     suspend fun deleteLanguage(languageToDeleteDto: LanguageDto)
     suspend fun getAllLanguages(): List<LanguageDto>
     suspend fun getLanguageById(languageId: Long): LanguageDto
+    suspend fun isAnyLanguageExist(): Boolean
 }

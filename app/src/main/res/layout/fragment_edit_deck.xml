@@ -1,0 +1,87 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="editSetViewModel"
+            type="com.example.verbo.viewmodels.EditDeckViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:background="#404040">
+
+        <Button
+            android:id="@+id/Powrot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#e0da2f"
+            android:drawableRight="@drawable/baseline_arrow_back" />
+
+        <Spinner
+            android:id="@+id/languages_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#e0da2f"
+            android:padding="10dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:spinnerMode="dropdown" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#000000"
+            android:orientation="horizontal"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:gravity="center_vertical"
+            android:padding="8dp">
+
+            <!-- Language Name -->
+            <EditText
+                android:id="@+id/deck_name_text_view"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Deck name"
+                android:text="@={editSetViewModel.deckName}"
+                android:textColorHint="@android:color/darker_gray"
+                android:textSize="25sp"
+                android:inputType="text"
+                android:enabled="false"
+                android:alpha="0.75"
+                android:textColor="@android:color/white" />
+
+            <Button
+                android:id="@+id/edit_or_save_deck_name_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#e0da2f"
+                android:textColor="@color/black"
+                android:text="@string/edit" />
+        </LinearLayout>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewWords"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:clipToPadding="false"
+            android:paddingBottom="8dp"
+            android:scrollbars="vertical" />
+
+        <Button
+            android:id="@+id/add_word_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#e0da2f"
+            android:text="@string/dodaj"
+            android:textColor="@android:color/black"
+            android:textSize="40sp"
+            android:layout_marginTop="8dp" />
+    </LinearLayout>
+</layout>

@@ -1,0 +1,64 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="#404040">
+
+    <Button
+        android:id="@+id/cancel_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#e0da2f"
+        android:drawableRight="@drawable/baseline_arrow_back"
+        android:layout_marginBottom="200dp"/>
+
+    <Button
+        android:id="@+id/closed_questions_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#e0da2f"
+        android:text="@string/pytania_zamkni_te"
+        android:textColor="@android:color/black"
+        android:textSize="35sp"
+        android:enabled="false"
+        android:alpha="0.5"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Drugi przycisk -->
+    <Button
+        android:id="@+id/open_questions_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#e0da2f"
+        android:text="@string/pytania_otwarte"
+        android:textColor="@android:color/black"
+        android:textSize="35sp"
+        android:enabled="false"
+        android:alpha="0.5"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Trzeci przycisk -->
+    <Button
+        android:id="@+id/time_questions_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#e0da2f"
+        android:text="@string/sprawd_si"
+        android:textColor="@android:color/black"
+        android:enabled="false"
+        android:alpha="0.5"
+        android:textSize="35sp" />
+
+    <TextView
+        android:id="@+id/cannot_study_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:textColor="#e0da2f"
+        android:textSize="16dp"
+        android:visibility="invisible"
+        android:text="Deck must contain atleast 4 flashcards to study it" />
+
+</LinearLayout>

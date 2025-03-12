@@ -34,4 +34,12 @@ interface LanguageDao {
         LIMIT 1
     """)
     suspend fun getLanguageById(languageId: Long): Language
+
+    @Query("""
+        SELECT
+        EXISTS (SELECT 1
+                FROM ${DatabaseConstants.TableNames.LANGUAGE}
+                LIMIT 1)
+    """)
+    suspend fun isAnyLanguageExist(): Boolean
 }
